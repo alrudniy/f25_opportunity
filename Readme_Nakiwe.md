@@ -1,1 +1,0 @@
-Nakiwe McDonald
