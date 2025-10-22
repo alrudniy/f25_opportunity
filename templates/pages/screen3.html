@@ -1,8 +1,18 @@
 {% extends "base.html" %}
 {% block content %}
   <section class="dash-card">
-    <h1>Screen 3</h1>
-    <p>This is a placeholder page you can expand later.</p>
-    <div><a class="btn" href="{% url 'screen1' %}">← Back to Screen 1</a></div>
+    <h1>Screen 3 {{ role }}</h1>
+
+    {% if request.user.user_type == 'student' %}
+      {% include "pages/partials/s3_student.html" %}
+    {% elif request.user.user_type == 'organization' %}
+      {% include "pages/partials/s3_organization.html" %}
+    {% elif request.user.user_type == 'administrator' %}
+      {% include "pages/partials/s3_administrator.html" %}
+    {% else %}
+      <p>No role specific content yet.</p>
+    {% endif %}
+
+    <a class="btn" href="{% url 'screen1' %}" style="margin-top:1rem;">← Back to Screen 1</a>
   </section>
 {% endblock %}

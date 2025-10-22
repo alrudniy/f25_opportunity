@@ -1,9 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
   <section class="dash-card">
-    <h1>Hello {{ request.user.display_name }}</h1>
-    <p class="muted">You are signed in as <strong>{{ request.user.user_type|title }}</strong>.</p>
-    <div class="button-row">
+    <h1>Screen 1 {{ role }}</h1>
+    <p class="muted">Hello {{ request.user.display_name }} ({{ role }})</p>
+
+    {% if request.user.user_type == 'student' %}
+      {% include "pages/partials/s1_student.html" %}
+    {% elif request.user.user_type == 'organization' %}
+      {% include "pages/partials/s1_organization.html" %}
+    {% elif request.user.user_type == 'administrator' %}
+      {% include "pages/partials/s1_administrator.html" %}
+    {% else %}
+      <p>No role specific content yet.</p>
+    {% endif %}
+
+    <div class="button-row" style="margin-top:1rem;">
       <a class="btn" href="{% url 'screen2' %}">Go to Screen 2</a>
       <a class="btn" href="{% url 'screen3' %}">Go to Screen 3</a>
     </div>
