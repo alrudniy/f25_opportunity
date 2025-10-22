@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="dash-card">
+    <h1>Hello {{ request.user.display_name }}</h1>
+    <p class="muted">You are signed in as <strong>{{ request.user.user_type|title }}</strong>.</p>
+    <div class="button-row">
+      <a class="btn" href="{% url 'screen2' %}">Go to Screen 2</a>
+      <a class="btn" href="{% url 'screen3' %}">Go to Screen 3</a>
+    </div>
+  </section>
+{% endblock %}
