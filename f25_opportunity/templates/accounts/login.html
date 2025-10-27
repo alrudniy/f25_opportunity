@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="auth-card">
+    <h1>Sign in{% if selected_user_type %} as {{ selected_user_type|title }}{% endif %}</h1>
+    <form method="post" novalidate>
+      {% csrf_token %}
+      <div class="form-field">
+        <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+        {{ form.username }}
+        {% if form.username.errors %}<div class="error">{{ form.username.errors.0 }}</div>{% endif %}
+      </div>
+      <div class="form-field">
+        <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+        {{ form.password }}
+        {% if form.password.errors %}<div class="error">{{ form.password.errors.0 }}</div>{% endif %}
+      </div>
+      <button class="btn primary" type="submit">Sign in</button>
+    </form>
+    <div class="auth-links">
+      <a href="{% url 'register' %}{% if selected_user_type %}?type={{ selected_user_type }}{% endif %}">Create account</a>
+    </div>
+  </section>
+{% endblock %}
