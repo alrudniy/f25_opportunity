@@ -1,3 +1,4 @@
+# Aider is running
 import os
 
 # Define the folder path
