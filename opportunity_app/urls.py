@@ -7,5 +7,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('pages.urls')),
     path('accounts/', include('accounts.urls')),
+    path('opportunities/', include('opportunities.urls')), # New: include opportunities app URLs
     path('logout/', LogoutView.as_view(next_page='welcome'), name='logout'),
 ]
