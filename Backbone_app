@@ -1,0 +1,50 @@
+# Python script: Basic backbone for authentication API for your MERN-like app using Flask
+# Implements backend routes for login, register, and forgot password screens
+
+from flask import Flask, request, jsonify
+from werkzeug.security import generate_password_hash, check_password_hash
+import uuid
+
+app = Flask(__name__)
+
+# Simulated user database
+users_db = {}
+
+def find_user_by_email(email):
+    return next((user for user in users_db.values() if user["email"] == email), None)
+
+@app.route('/register', methods=['POST'])
+def register():
+    data = request.json
+    if find_user_by_email(data['email']):
+        return jsonify({"error": "Email already registered"}), 400
+    user_id = str(uuid.uuid4())
+    users_db[user_id] = {
+        "id": user_id,
+        "email": data['email'],
+        "password": generate_password_hash(data['password']),
+        "role": data.get('role', 'student')  # Default role student
+    }
+    return jsonify({"message": "Registration successful", "user_id": user_id}), 201
+
+@app.route('/login', methods=['POST'])
+def login():
+    data = request.json
+    user = find_user_by_email(data['email'])
+    if not user or not check_password_hash(user['password'], data['password']):
+        return jsonify({"error": "Invalid email or password"}), 401
+    # Normally, generate a JWT token here
+    return jsonify({"message": "Login successful", "user_id": user['id'], "role": user['role']}), 200
+
+@app.route('/forgot-password', methods=['POST'])
+def forgot_password():
+    data = request.json
+    user = find_user_by_email(data['email'])
+    if not user:
+        return jsonify({"error": "Email not found"}), 404
+    # Here one would send an email with reset instructions, omitted for brevity
+    return jsonify({"message": "Password reset instructions sent to your email"}), 200
+
+if __name__ == '__main__':
+    # Run the Flask backend server on localhost:5000
+    app.run(debug=True)

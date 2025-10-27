@@ -1,0 +1,62 @@
+# Python script to create a recommended directory structure for your MERN stack student opportunity app
+
+import os
+
+def create_project_structure(base_dir):
+    structure = {
+        "client": {
+            "public": ["index.html", "favicon.ico"],
+            "src": {
+                "components": [],
+                "pages": [],
+                "styles": [],
+                "utils": [],
+                "App.js": None,
+                "index.js": None
+            },
+            "package.json": None,
+            "README.md": None
+        },
+        "server": {
+            "config": ["database.js", "auth.js"],
+            "controllers": ["studentController.js", "organizationController.js", "authController.js"],
+            "models": ["Student.js", "Organization.js", "Opportunity.js", "Application.js"],
+            "routes": ["studentRoutes.js", "organizationRoutes.js", "authRoutes.js"],
+            "middlewares": ["authMiddleware.js", "errorMiddleware.js"],
+            "utils": ["emailService.js", "notificationService.js"],
+            "server.js": None,
+            "package.json": None,
+            "README.md": None
+        },
+        ".gitignore": None,
+        "README.md": None,
+        "package.json": None,
+        "env.example": None
+    }
+    
+    def create_dirs(base, struct):
+        for key, value in struct.items():
+            path = os.path.join(base, key)
+            if isinstance(value, dict):
+                # It's a directory
+                if not os.path.exists(path):
+                    os.makedirs(path)
+                create_dirs(path, value)
+            else:
+                # It's a file or list of files
+                if isinstance(value, list):
+                    if not os.path.exists(path):
+                        os.makedirs(path)
+                    for file_name in value:
+                        file_path = os.path.join(path, file_name)
+                        if not os.path.isfile(file_path):
+                            open(file_path, 'w').close()
+                else:  # single file directly in base
+                    if not os.path.isfile(path):
+                        open(path, 'w').close()
+
+    create_dirs(base_dir, structure)
+    print(f"Project structure created at {base_dir}")
+
+# Usage
+create_project_structure("student-opportunity-app")
