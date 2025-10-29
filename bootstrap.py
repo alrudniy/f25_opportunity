@@ -86,6 +86,12 @@ def main():
     else:
         print(">> 'pages' app exists; skipping")
 
+    if not (cwd / "dylan_opportunities").exists():
+        print(">> Creating 'dylan_opportunities' app")
+        run([str(py), "manage.py", "startapp", "dylan_opportunities"])
+    else:
+        print(">> 'dylan_opportunities' app exists; skipping")
+
     # 5) .env with DB settings
     write(cwd / ".env", dedent("""\
         DJANGO_SECRET_KEY=dev-insecure-change-me
@@ -115,6 +121,7 @@ def main():
             'django.contrib.admin','django.contrib.auth','django.contrib.contenttypes',
             'django.contrib.sessions','django.contrib.messages','django.contrib.staticfiles',
             'accounts','pages',
+            'dylan_opportunities',
         ]
 
         MIDDLEWARE = [
@@ -146,7 +153,7 @@ def main():
         DATABASES = {{
             'default': {{
                 'ENGINE': 'django.db.backends.postgresql',
-                'NAME': os.getenv('DB_NAME','opportunity_db'),
+                'NAME': os.getenv('DB_NAME','opportunity'),
                 'USER': os.getenv('DB_USER','oppo_app'),
                 'PASSWORD': os.getenv('DB_PASSWORD','CSCI340Fall2025'),
                 'HOST': os.getenv('DB_HOST','34.16.174.60'),
@@ -184,14 +191,29 @@ def main():
     urls_root = dedent("""\
         from django.contrib import admin
         from django.urls import path, include
+        from django.contrib.auth.views import LogoutView
+
 
         urlpatterns = [
             path('admin/', admin.site.urls),
             path('', include('pages.urls')),
             path('accounts/', include('accounts.urls')),
+            path('opportunities/', include('dylan_opportunities.urls')),
+            path('logout/', LogoutView.as_view(next_page='welcome'), name='logout'),
         ]
     """)
     write(cwd / PROJECT / "urls.py", urls_root)
+
+    dylan_opportunities_urls = dedent("""\
+        from django.urls import path
+        from . import views
+
+        app_name = 'dylan_opportunities'
+        urlpatterns = [
+            # Add your URLs here
+        ]
+    """)
+    write(cwd / "dylan_opportunities" / "urls.py", dylan_opportunities_urls)
 
     # 8) accounts app files
     accounts_models = dedent("""\
@@ -566,6 +588,8 @@ def main():
     # 11) Make migrations and migrate
     print(">> makemigrations (accounts)")
     run([str(py), "manage.py", "makemigrations", "accounts"])
+    print(">> makemigrations (dylan_opportunities)")
+    run([str(py), "manage.py", "makemigrations", "dylan_opportunities"])
 
     print(">> migrate")
     try:
