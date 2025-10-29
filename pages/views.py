@@ -6,15 +6,12 @@ def welcome(request):
 
 @login_required
 def screen1(request):
-    role = request.user.user_type.title() if hasattr(request.user, 'user_type') else 'User'
-    return render(request, 'pages/screen1.html', {'role': role})
+    return render(request, 'pages/screen1.html')
 
 @login_required
 def screen2(request):
-    role = request.user.user_type.title() if hasattr(request.user, 'user_type') else 'User'
-    return render(request, 'pages/screen2.html', {'role': role})
+    return render(request, 'pages/screen2.html')
 
 @login_required
 def screen3(request):
-    role = request.user.user_type.title() if hasattr(request.user, 'user_type') else 'User'
-    return render(request, 'pages/screen3.html', {'role': role})
+    return render(request, 'pages/screen3.html')
