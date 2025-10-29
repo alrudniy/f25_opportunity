@@ -25,7 +25,7 @@ import subprocess
 from pathlib import Path
 from textwrap import dedent
 
-PROJECT = "opportunity_app"  # Django settings package name
+PROJECT = "Dylan_opportunity_app"  # Django settings package name
 VENV_DIR = Path(".venv")
 
 def is_windows() -> bool:
