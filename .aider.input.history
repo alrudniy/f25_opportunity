@@ -1,0 +1,15 @@
+
+# 2025-10-27 12:40:53.287992
++aider --model gemini/gemini-2.5-flash
+
+# 2025-10-27 12:43:03.522693
++edit Readme_Joshua.md and make it say hello Joshua 
+
+# 2025-10-27 12:52:32.206112
++exit the Readme_Joshua.d
+
+# 2025-10-27 12:54:59.108247
++leave the readme
+
+# 2025-10-27 12:56:31.476506
++change the model to gemini/gemini-2.5-flash
