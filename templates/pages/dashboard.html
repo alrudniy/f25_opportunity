@@ -8,22 +8,23 @@
     body {
       margin: 0;
       font-family: "Poppins", Arial, sans-serif;
-      background: linear-gradient(to bottom right, #c2f0f0, #ffffff);
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      background-color: #f8f9fa;
+      color: #333;
     }
 
     header {
-      width: 100%;
-      padding: 20px 40px;
-      font-size: 2em;
+      background-color: #ffffff;
+      padding: 15px 40px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header-title {
+      font-size: 1.5em;
       font-weight: 600;
-      color: #222;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      text-align: left;
+      color: #0056b3;
     }
 
     .dashboard-container {
@@ -33,32 +34,33 @@
       padding: 40px;
       box-shadow: 0 4px 10px rgba(0,0,0,0.1);
       width: 80%;
-      max-width: 800px;
-      margin-top: 20px;
+      max-width: 900px;
+      margin: 40px auto;
     }
 
     .section-title {
-      font-weight: bold;
-      font-size: 1.1em;
-      margin-bottom: 5px;
+      font-weight: 600;
+      font-size: 1.8em;
+      margin-bottom: 10px;
+      color: #222;
     }
 
     .subtext {
       color: #666;
-      font-size: 0.9em;
-      margin-bottom: 25px;
+      font-size: 1em;
+      margin-bottom: 30px;
     }
 
     .button-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 15px;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
       justify-items: center;
     }
 
     .dashboard-btn {
-      padding: 15px 10px;
-      border: 2px solid #ddd;
+      padding: 18px 10px;
+      border: 1px solid #ddd;
       border-radius: 8px;
       background-color: #fff;
       font-size: 1em;
@@ -67,39 +69,41 @@
       cursor: pointer;
       transition: all 0.3s ease;
       width: 100%;
+      text-align: center;
     }
 
     .dashboard-btn:hover {
-      border-color: #007BFF;
-      color: #007BFF;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      background-color: #007bff;
+      color: #ffffff;
+      border-color: #007bff;
+      box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+      transform: translateY(-2px);
     }
 
     .profile-icon {
-      width: 60px;
-      height: 60px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
-      background: #e8e8ff;
+      background: #e9ecef;
       display: flex;
       align-items: center;
       justify-content: center;
-      color: #7a7aff;
-      font-size: 2em;
-      position: absolute;
-      top: 30px;
-      right: 60px;
+      color: #495057;
+      font-size: 1.5em;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
-  <header>HELLO STUDENT</header>
-
-  <div class="profile-icon">👤</div>
+  <header>
+    <div class="header-title">Student Dashboard</div>
+    <div class="profile-icon">👤</div>
+  </header>
 
   <div class="dashboard-container">
-    <div class="section-title">Dashboard</div>
-    <div class="subtext">Select an option below!</div>
+    <div class="section-title">Welcome to your Dashboard</div>
+    <div class="subtext">Select an option below to get started.</div>
 
     <div class="button-grid">
       <button class="dashboard-btn">Your Applications</button>
