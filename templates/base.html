@@ -18,6 +18,9 @@
             <li><a href="{% url 'screen2' %}">Screen 2</a></li>
             <li><a href="{% url 'screen3' %}">Screen 3</a></li>
             <li class="divider"></li>
+            {% if user.user_type == 'student' %}
+              <li><a href="{% url 'profile_student' %}">My Profile</a></li>
+            {% endif %}
             <li class="muted">Hi, {{ user.display_name }}</li>
             <li><a href="{% url 'logout' %}">Log out</a></li>
           {% else %}
