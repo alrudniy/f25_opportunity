@@ -73,8 +73,10 @@
     </div>
 
     <div class="experiences-panel">
-        <h3>Experiences</h3>
-        {# Add Experience button could go here #}
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <h3>Experiences</h3>
+            <a href="{% url 'add_experience' %}" class="btn">Add Experience</a>
+        </div>
 
         {% if experiences %}
             {% for experience in experiences %}

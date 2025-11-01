@@ -1,6 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import StudentProfile
+from .forms import ExperienceForm
 
 def welcome(request):
     return render(request, 'pages/welcome.html')
@@ -26,3 +27,27 @@ def profile_student(request):
         'experiences': experiences,
     }
     return render(request, 'pages/Profile_STUDENT.html', context)
+
+@login_required
+def add_experience(request):
+    # Ensure the user has a student profile
+    if not hasattr(request.user, 'student_profile'):
+        # Or redirect to a profile creation page if you have one
+        return redirect('profile_student')
+
+    profile = request.user.student_profile
+    if request.method == 'POST':
+        form = ExperienceForm(request.POST)
+        if form.is_valid():
+            experience = form.save(commit=False)
+            experience.profile = profile
+            experience.save()
+            return redirect('profile_student')
+    else:
+        form = ExperienceForm()
+    
+    context = {
+        'form': form,
+        'title': 'Add Experience'
+    }
+    return render(request, 'pages/experience_form.html', context)
