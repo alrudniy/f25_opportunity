@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from .models import StudentProfile
 
 def welcome(request):
     return render(request, 'pages/welcome.html')
@@ -21,4 +22,10 @@ def screen3(request):
 
 @login_required
 def profile_student(request):
-    return render(request, 'pages/Profile_STUDENT.html')
+    profile, created = StudentProfile.objects.get_or_create(user=request.user)
+    experiences = profile.experiences.all()
+    context = {
+        'profile': profile,
+        'experiences': experiences,
+    }
+    return render(request, 'pages/Profile_STUDENT.html', context)

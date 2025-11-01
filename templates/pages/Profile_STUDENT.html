@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+
+{% block title %}Student Profile{% endblock %}
+
+{% block content %}
+<style>
+    .profile-container {
+        max-width: 920px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        font-family: sans-serif;
+    }
+    .profile-card {
+        padding-bottom: 1.5rem;
+        border-bottom: 1px solid #eee;
+        margin-bottom: 1.5rem;
+    }
+    .profile-card h2 {
+        margin: 0 0 0.5rem;
+    }
+    .profile-card p {
+        margin: 0.25rem 0;
+        color: #555;
+    }
+    .experiences-panel h3 {
+        margin-top: 0;
+    }
+    .experience-item {
+        padding: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+    }
+    .experience-item:last-child {
+        margin-bottom: 0;
+    }
+    .experience-item h4 {
+        margin: 0 0 0.5rem;
+    }
+    .experience-item p {
+        margin: 0;
+    }
+    .badge {
+        display: inline-block;
+        padding: 0.25em 0.6em;
+        font-size: 75%;
+        font-weight: 700;
+        line-height: 1;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: baseline;
+        border-radius: 0.25rem;
+        color: #fff;
+        background-color: #6c757d;
+    }
+    .empty-state {
+        text-align: center;
+        padding: 2rem;
+        background-color: #f8f9fa;
+        border-radius: 4px;
+    }
+</style>
+
+<div class="profile-container">
+    <div class="profile-card">
+        <h2>{{ request.user.first_name }} {{ request.user.last_name }}</h2>
+        <p><strong>University:</strong> {{ profile.university|default:"Not specified" }}</p>
+        <p><strong>Class Year:</strong> {{ profile.class_year|default:"Not specified" }}</p>
+        {# Edit button for profile could go here #}
+    </div>
+
+    <div class="experiences-panel">
+        <h3>Experiences</h3>
+        {# Add Experience button could go here #}
+
+        {% if experiences %}
+            {% for experience in experiences %}
+                <div class="experience-item">
+                    <h4>{{ experience.role }} at {{ experience.organization_name }}</h4>
+                    <p>
+                        <small>
+                            {{ experience.get_experience_type_display }} | 
+                            {{ experience.start_date|date:"M Y" }} - 
+                            {% if experience.end_date %}
+                                {{ experience.end_date|date:"M Y" }}
+                            {% else %}
+                                Present
+                            {% endif %}
+                            {% if experience.auto_added %}
+                                <span class="badge">{{ "Added via Opportunity App" }}</span>
+                            {% endif %}
+                        </small>
+                    </p>
+                    <p>{{ experience.description|linebreaks }}</p>
+                    {# Edit/Delete buttons for experience could go here #}
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="empty-state">
+                <p>You haven’t added any experiences yet.</p>
+                <p>Add your volunteer, internship, or career experiences to increase your match rate.</p>
+                {# "Add experience" CTA #}
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
