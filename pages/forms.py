@@ -1,5 +1,37 @@
 from django import forms
-from .models import Experience
+from .models import Experience, StudentProfile
+
+
+class StudentProfileForm(forms.ModelForm):
+    first_name = forms.CharField(label="First Name", max_length=150, required=True)
+    last_name = forms.CharField(label="Last Name", max_length=150, required=True)
+
+    class Meta:
+        model = StudentProfile
+        fields = ['university', 'class_year', 'about_me']
+        widgets = {
+            'about_me': forms.Textarea(attrs={'rows': 4}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user', None)
+        super().__init__(*args, **kwargs)
+        if self.user:
+            self.fields['first_name'].initial = self.user.first_name
+            self.fields['last_name'].initial = self.user.last_name
+
+    def save(self, commit=True):
+        profile = super().save(commit=False)
+        
+        self.user.first_name = self.cleaned_data['first_name']
+        self.user.last_name = self.cleaned_data['last_name']
+        
+        if commit:
+            self.user.save()
+            profile.save()
+            
+        return profile
+
 
 class ExperienceForm(forms.ModelForm):
     description = forms.CharField(

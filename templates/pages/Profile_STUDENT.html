@@ -66,10 +66,20 @@
 
 <div class="profile-container">
     <div class="profile-card">
-        <h2>{{ request.user.first_name }} {{ request.user.last_name }}</h2>
-        <p><strong>University:</strong> {{ profile.university|default:"Not specified" }}</p>
-        <p><strong>Class Year:</strong> {{ profile.class_year|default:"Not specified" }}</p>
-        {# Edit button for profile could go here #}
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div>
+                <h2>{{ request.user.first_name }} {{ request.user.last_name }}</h2>
+                <p><strong>University:</strong> {{ profile.university|default:"Not specified" }}</p>
+                <p><strong>Class Year:</strong> {{ profile.class_year|default:"Not specified" }}</p>
+            </div>
+            <a href="{% url 'edit_profile_student' %}" class="btn">Edit Profile</a>
+        </div>
+        {% if profile.about_me %}
+            <div style="margin-top: 1rem;">
+                <h4>About Me</h4>
+                <p>{{ profile.about_me|linebreaksbr }}</p>
+            </div>
+        {% endif %}
     </div>
 
     <div class="experiences-panel">

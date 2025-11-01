@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from .models import StudentProfile
-from .forms import ExperienceForm
+from .forms import ExperienceForm, StudentProfileForm
 
 def welcome(request):
     return render(request, 'pages/welcome.html')
@@ -49,5 +49,22 @@ def add_experience(request):
     context = {
         'form': form,
         'title': 'Add Experience'
+    }
+    return render(request, 'pages/experience_form.html', context)
+
+@login_required
+def edit_profile_student(request):
+    profile, created = StudentProfile.objects.get_or_create(user=request.user)
+    if request.method == 'POST':
+        form = StudentProfileForm(request.POST, instance=profile, user=request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('profile_student')
+    else:
+        form = StudentProfileForm(instance=profile, user=request.user)
+    
+    context = {
+        'form': form,
+        'title': 'Edit Profile'
     }
     return render(request, 'pages/experience_form.html', context)
