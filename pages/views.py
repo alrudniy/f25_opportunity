@@ -56,7 +56,7 @@ def add_experience(request):
 def edit_profile_student(request):
     profile, created = StudentProfile.objects.get_or_create(user=request.user)
     if request.method == 'POST':
-        form = StudentProfileForm(request.POST, instance=profile, user=request.user)
+        form = StudentProfileForm(request.POST, request.FILES, instance=profile, user=request.user)
         if form.is_valid():
             form.save()
             return redirect('profile_student')

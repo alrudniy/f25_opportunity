@@ -62,15 +62,32 @@
         background-color: #f8f9fa;
         border-radius: 4px;
     }
+    .profile-picture {
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        object-fit: cover;
+        background-color: #e2e8f0; /* A neutral placeholder color */
+        margin-right: 2rem;
+        flex-shrink: 0; /* Prevents shrinking if container is flex */
+    }
 </style>
 
 <div class="profile-container">
     <div class="profile-card">
         <div style="display: flex; justify-content: space-between; align-items: flex-start;">
-            <div>
-                <h2>{{ request.user.first_name }} {{ request.user.last_name }}</h2>
-                <p><strong>University:</strong> {{ profile.university|default:"Not specified" }}</p>
-                <p><strong>Class Year:</strong> {{ profile.class_year|default:"Not specified" }}</p>
+            <div style="display: flex; align-items: center;">
+                {% if profile.profile_picture %}
+                    <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="profile-picture">
+                {% else %}
+                    {# A simple placeholder div #}
+                    <div class="profile-picture"></div>
+                {% endif %}
+                <div>
+                    <h2>{{ request.user.first_name }} {{ request.user.last_name }}</h2>
+                    <p><strong>University:</strong> {{ profile.university|default:"Not specified" }}</p>
+                    <p><strong>Class Year:</strong> {{ profile.class_year|default:"Not specified" }}</p>
+                </div>
             </div>
             <a href="{% url 'edit_profile_student' %}" class="btn">Edit Profile</a>
         </div>

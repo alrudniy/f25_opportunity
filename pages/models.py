@@ -5,6 +5,7 @@ from django.db import models
 # Create your models here.
 class StudentProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='student_profile')
+    profile_picture = models.ImageField(upload_to='profile_pics/', null=True, blank=True)
     university = models.CharField(max_length=255, blank=True)
     class_year = models.PositiveIntegerField(blank=True, null=True)
     about_me = models.TextField(blank=True)

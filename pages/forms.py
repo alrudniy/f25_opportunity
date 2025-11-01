@@ -8,7 +8,7 @@ class StudentProfileForm(forms.ModelForm):
 
     class Meta:
         model = StudentProfile
-        fields = ['university', 'class_year', 'about_me']
+        fields = ['profile_picture', 'university', 'class_year', 'about_me']
         widgets = {
             'about_me': forms.Textarea(attrs={'rows': 4}),
         }

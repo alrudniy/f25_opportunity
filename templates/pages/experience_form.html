@@ -24,7 +24,7 @@ textarea {
 </style>
 <div class="auth-card">
     <h1>{{ title }}</h1>
-    <form method="post" novalidate>
+    <form method="post" novalidate enctype="multipart/form-data">
         {% csrf_token %}
         {% for field in form %}
             <div class="form-field">
