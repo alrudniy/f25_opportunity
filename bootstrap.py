@@ -567,6 +567,9 @@ def main():
     print(">> makemigrations (accounts)")
     run([str(py), "manage.py", "makemigrations", "accounts"])
 
+    print(">> makemigrations (pages)")
+    run([str(py), "manage.py", "makemigrations", "pages"])
+
     print(">> migrate")
     try:
         run([str(py), "manage.py", "migrate"])
