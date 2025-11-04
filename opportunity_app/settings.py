@@ -42,6 +42,8 @@ TEMPLATES = [{
 }]
 WSGI_APPLICATION = 'opportunity_app.wsgi.application'
 
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',

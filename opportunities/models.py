@@ -51,3 +51,31 @@ class OpportunityApplication(models.Model):
 
     def __str__(self):
         return f"{self.volunteer} applied for {self.opportunity}"
+
+
+class Subscription(models.Model):
+    student = models.ForeignKey(
+        VolunteerProfile, on_delete=models.CASCADE, related_name='subscriptions'
+    )
+    organization = models.ForeignKey(
+        OrganizationProfile, on_delete=models.CASCADE, related_name='subscribers'
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('student', 'organization')
+
+    def __str__(self):
+        return f"{self.student} subscribed to {self.organization}"
+
+
+class Notification(models.Model):
+    recipient = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='notifications'
+    )
+    message = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"Notification for {self.recipient}: {self.message[:20]}..."
