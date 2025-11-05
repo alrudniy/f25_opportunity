@@ -44,3 +44,7 @@ def student_achievements(request):
         'achievements': achievements,
         'form': form,
     })
+def faq(request):
+    return render(request, 'pages/faq.html')
+def dashboard(request):
+    return render(request, 'pages/dashboard.html')
