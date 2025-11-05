@@ -19,7 +19,7 @@ class LoginTestCase(TestCase):
             'password': self.password,
         })
         # Successful login should redirect to LOGIN_REDIRECT_URL.
-        self.assertRedirects(response, reverse('screen1'), fetch_redirect_response=False)
+        self.assertRedirects(response, reverse('dylan_opportunities:home'), fetch_redirect_response=False)
         self.assertTrue('_auth_user_id' in self.client.session)
 
     def test_failed_login_with_invalid_password(self):

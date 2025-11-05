@@ -82,5 +82,5 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = 'dylan_opportunities:login'
-LOGIN_REDIRECT_URL = 'screen1'
+LOGIN_REDIRECT_URL = 'dylan_opportunities:home'
 LOGOUT_REDIRECT_URL = 'dylan_opportunities:login'
