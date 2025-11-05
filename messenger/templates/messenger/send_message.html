@@ -1,0 +1,19 @@
+{% extends "messenger/base.html" %}
+
+{% block content %}
+    <h1>Send Individual Message</h1>
+
+    <h2>Send to Volunteer</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ volunteer_form.as_p }}
+        <button type="submit" name="send_to_volunteer">Send to Volunteer</button>
+    </form>
+
+    <h2>Send to Organization</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ organization_form.as_p }}
+        <button type="submit" name="send_to_organization">Send to Organization</button>
+    </form>
+{% endblock %}

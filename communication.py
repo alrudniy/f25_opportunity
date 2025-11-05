@@ -19,6 +19,7 @@ class CommunicationManager:
         print(f"  Subject: {subject}")
         print(f"  Message: {message}\n")
         # In a real application, this would integrate with an email service, SMS gateway, etc.
+        return f"Message sent to volunteer {volunteer_id}."
 
     def send_message_to_organization(self, organization_id: str, message: str, subject: str = "Message from Volunteer"):
         """
@@ -29,6 +30,7 @@ class CommunicationManager:
         print(f"  Subject: {subject}")
         print(f"  Message: {message}\n")
         # In a real application, this would integrate with an email service, CRM, etc.
+        return f"Message sent to organization {organization_id}."
 
     def broadcast_message_to_volunteers(self, message: str, subject: str = "Important Announcement"):
         """
@@ -37,6 +39,7 @@ class CommunicationManager:
         print(f"Broadcasting to all volunteers:")
         print(f"  Subject: {subject}")
         print(f"  Message: {message}\n")
+        return "Message broadcast to all volunteers."
 
     def broadcast_message_to_organizations(self, message: str, subject: str = "General Update"):
         """
@@ -45,16 +48,4 @@ class CommunicationManager:
         print(f"Broadcasting to all organizations:")
         print(f"  Subject: {subject}")
         print(f"  Message: {message}\n")
-
-
-if __name__ == "__main__":
-    # Example usage:
-    comm_manager = CommunicationManager()
-
-    print("--- Testing Volunteer Communication ---")
-    comm_manager.send_message_to_volunteer("V123", "Your shift for tomorrow has been confirmed.", "Shift Confirmation")
-    comm_manager.broadcast_message_to_volunteers("Thank you for your continued support!", "A Big Thank You!")
-
-    print("\n--- Testing Organization Communication ---")
-    comm_manager.send_message_to_organization("OrgABC", "We need more volunteers for the upcoming event.", "Volunteer Request")
-    comm_manager.broadcast_message_to_organizations("Please update your contact information if it has changed.", "Information Update")
+        return "Message broadcast to all organizations."
