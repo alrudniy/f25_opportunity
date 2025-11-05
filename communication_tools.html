@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Communication Tools</title>
+    <style>
+        body {
+            font-family: sans-serif;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+        .org-list {
+            list-style: none;
+            padding: 0;
+        }
+        .org-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ccc;
+            margin-bottom: 5px;
+        }
+        .follow-up-btn {
+            padding: 8px 12px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Communication Tools</h1>
+        <h2>Organizations</h2>
+        <ul class="org-list">
+            {% for org in organizations %}
+            <li class="org-item">
+                <span>{{ org.name }}</span>
+                <a href="mailto:{{ org.contact_email }}" class="follow-up-btn">Follow Up</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+</body>
+</html>
