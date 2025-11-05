@@ -9,3 +9,5 @@ ENV/
 env/
 .aider*
 .env
+.env
+.env
