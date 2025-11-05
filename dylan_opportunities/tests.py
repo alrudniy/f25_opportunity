@@ -1,11 +1,12 @@
 from django.test import TestCase
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.urls import reverse
 
 class LoginTestCase(TestCase):
     def setUp(self):
         self.username = 'testuser'
         self.password = 'testpass123'
+        User = get_user_model()
         self.user = User.objects.create_user(username=self.username, password=self.password)
         self.login_url = reverse('dylan_opportunities:login')
 
@@ -17,8 +18,8 @@ class LoginTestCase(TestCase):
             'username': self.username,
             'password': self.password,
         })
-        # Successful login should redirect. The default is /accounts/profile/.
-        self.assertRedirects(response, '/accounts/profile/', fetch_redirect_response=False)
+        # Successful login should redirect to LOGIN_REDIRECT_URL.
+        self.assertRedirects(response, reverse('screen1'), fetch_redirect_response=False)
         self.assertTrue('_auth_user_id' in self.client.session)
 
     def test_failed_login_with_invalid_password(self):
