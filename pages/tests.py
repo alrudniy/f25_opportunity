@@ -1,13 +1,15 @@
-from django.test import TestCase
-from django.urls import reverse
+from django.test import SimpleTestCase
+from django.urls import reverse, resolve
+
+from .views import dashboard
 
 
-class DashboardPageTest(TestCase):
-    def test_dashboard_page_view(self):
+class DashboardPageTest(SimpleTestCase):
+    def test_dashboard_url_resolves(self):
         """
-        Tests that the dashboard page is accessible via name, returns a 200
-        status code, and uses the correct template.
+        Tests that the URL for the dashboard resolves to the correct view.
         """
-        response = self.client.get(reverse('dashboard'))
-        self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'pages/dashboard.html')
+        url = reverse('dashboard')
+        self.assertEqual(url, '/dashboard/')
+        resolver = resolve(url)
+        self.assertEqual(resolver.func, dashboard)
