@@ -2,6 +2,7 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.views.generic import FormView
+from django.contrib import messages
 from .forms import UserRegistrationForm, EmailAuthenticationForm
 
 class RegisterView(FormView):
@@ -36,3 +37,20 @@ class CustomLoginView(LoginView):
             self.request.session['selected_user_type'] = user_type
         context['selected_user_type'] = user_type
         return context
+
+
+class DeleteAccountView(FormView):
+    template_name = 'accounts/delete_account.html'
+    form_class = EmailAuthenticationForm
+    success_url = reverse_lazy('welcome')
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['request'] = self.request
+        return kwargs
+
+    def form_valid(self, form):
+        user = form.get_user()
+        user.delete()
+        messages.success(self.request, "Account deleted successfully.")
+        return super().form_valid(form)

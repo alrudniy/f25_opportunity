@@ -18,6 +18,7 @@
     </form>
     <div class="auth-links">
       <a href="{% url 'register' %}{% if selected_user_type %}?type={{ selected_user_type }}{% endif %}">Create account</a>
+      | <a href="{% url 'delete_account' %}">Delete account</a>
     </div>
   </section>
 {% endblock %}
