@@ -10,20 +10,21 @@ class StudentProfileValidationTest(TestCase):
         self.user = User.objects.create_user(username='teststudent', password='password123')
         self.client.login(username='teststudent', password='password123')
         # We assume the user has a student profile instance created upon user creation.
-        # We assume 'student_profile' is the URL name for the profile page view.
+        # We assume 'edit_profile_student' is the URL name for the profile page view.
         # This view should handle both GET and POST for displaying and updating the profile.
-        self.profile_url = reverse('student_profile')
+        self.profile_url = reverse('edit_profile_student')
         self.valid_data = {
-            'name': 'Valid Name',
+            'first_name': 'Valid',
+            'last_name': 'Name',
             'class_year': '2025',
             'university': 'Valid University',
         }
 
-    def test_name_field_validation(self):
-        """Test validation for the 'name' field."""
+    def test_first_name_field_validation(self):
+        """Test validation for the 'first_name' field."""
         invalid_names = {
-            "special_chars": 'Name With Special Chars@#$',
-            "numbers": 'NameWithNumbers123',
+            "special_chars": 'Name@#$',
+            "numbers": 'Name123',
             "empty": '',
             "code_injection": '<script>alert("xss")</script>',
             "long_text": 'a' * 151,  # Assuming max_length=150
@@ -31,10 +32,10 @@ class StudentProfileValidationTest(TestCase):
         for test_case, name in invalid_names.items():
             with self.subTest(case=test_case):
                 data = self.valid_data.copy()
-                data['name'] = name
+                data['first_name'] = name
                 response = self.client.post(self.profile_url, data)
                 self.assertEqual(response.status_code, 200)
-                self.assertIn('name', response.context['form'].errors)
+                self.assertIn('first_name', response.context['form'].errors)
 
     def test_class_year_field_validation(self):
         """Test validation for the 'class_year' field."""
