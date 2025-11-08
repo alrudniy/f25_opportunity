@@ -1,11 +1,12 @@
 from django.test import TestCase
 from django.urls import reverse
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 
 class StudentProfileValidationTest(TestCase):
     """Simplified tests to ensure invalid inputs do not crash the student profile page."""
 
     def setUp(self):
+        User = get_user_model()
         self.user = User.objects.create_user(username='testuser', password='password123')
         self.client.login(username='testuser', password='password123')
         self.profile_url = reverse('edit_profile_student')
