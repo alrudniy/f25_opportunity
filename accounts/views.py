@@ -40,7 +40,7 @@ class CustomLoginView(LoginView):
 
 
 class DeleteAccountView(FormView):
-    template_name = 'accounts/delete_account.html'
+    template_name = 'accounts/login.html'
     form_class = EmailAuthenticationForm
     success_url = reverse_lazy('welcome')
 
@@ -54,3 +54,8 @@ class DeleteAccountView(FormView):
         user.delete()
         messages.success(self.request, "Account deleted successfully.")
         return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['delete_mode'] = True
+        return context
