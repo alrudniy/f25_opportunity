@@ -1,11 +1,12 @@
 from django.test import TestCase
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.urls import reverse
 
 class StudentProfileValidationTest(TestCase):
 
     def setUp(self):
         """Set up a user and log them in."""
+        User = get_user_model()
         self.user = User.objects.create_user(username='teststudent', password='password123')
         self.client.login(username='teststudent', password='password123')
         # We assume the user has a student profile instance created upon user creation.
@@ -15,7 +16,7 @@ class StudentProfileValidationTest(TestCase):
         self.valid_data = {
             'name': 'Valid Name',
             'class_year': '2025',
-            'school': 'Valid University',
+            'university': 'Valid University',
         }
 
     def test_name_field_validation(self):
@@ -53,18 +54,18 @@ class StudentProfileValidationTest(TestCase):
                 self.assertEqual(response.status_code, 200)
                 self.assertIn('class_year', response.context['form'].errors)
 
-    def test_school_field_validation(self):
-        """Test validation for the 'school' field."""
-        invalid_schools = {
+    def test_university_field_validation(self):
+        """Test validation for the 'university' field."""
+        invalid_universities = {
             "empty": '',
             "long_text": 'a' * 201,  # Assuming max_length=200
-            "special_chars": 'School With Special Chars@#$',
+            "special_chars": 'University With Special Chars@#$',
             "code_injection": '<script>alert("xss")</script>',
         }
-        for test_case, school in invalid_schools.items():
+        for test_case, university in invalid_universities.items():
             with self.subTest(case=test_case):
                 data = self.valid_data.copy()
-                data['school'] = school
+                data['university'] = university
                 response = self.client.post(self.profile_url, data)
                 self.assertEqual(response.status_code, 200)
-                self.assertIn('school', response.context['form'].errors)
+                self.assertIn('university', response.context['form'].errors)
