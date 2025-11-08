@@ -1,6 +1,8 @@
 from django.test import SimpleTestCase
+from django.urls import resolve, reverse
 
 
-class FailingTest(SimpleTestCase):
-    def test_failing_assertion(self):
-        self.assertEqual(1, 2)
+class UrlTests(SimpleTestCase):
+    def test_admin_url_resolves(self):
+        url = reverse("admin:index")
+        self.assertEqual(resolve(url).view_name, "admin:index")
