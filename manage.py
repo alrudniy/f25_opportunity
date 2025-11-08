@@ -1,5 +1,19 @@
 #!/usr/bin/env python
 """Django's command-line utility for administrative tasks."""
+#
+# To run administrative tasks, first activate the virtual environment
+# from the project's root directory:
+#
+#   source .venv/bin/activate
+#
+# Then, install the project's dependencies:
+#
+#   pip install -r requirements.txt
+#
+# Now, you can run Django commands, for example:
+#
+#   python manage.py test
+#
 import os
 import sys
 
