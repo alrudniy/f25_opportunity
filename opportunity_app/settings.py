@@ -52,7 +52,7 @@ DATABASES = {
         'CONN_MAX_AGE': 60,
         'TEST': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db_test.sqlite3',
+            'NAME': str(BASE_DIR / 'db_test.sqlite3'),
         },
     }
 }
