@@ -1,6 +1,6 @@
 from django.test import SimpleTestCase
 
 
-class SimpleTest(SimpleTestCase):
-    def test_simple_assertion(self):
+class FailingTest(SimpleTestCase):
+    def test_failing_assertion(self):
         self.assertEqual(1, 2)
