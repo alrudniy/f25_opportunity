@@ -21,3 +21,6 @@ def screen3(request):
 
 def dashboard(request):
     return render(request, 'pages/dashboard.html')
+
+def organization(request):
+    return render(request, 'pages/orgDashboard.html')
