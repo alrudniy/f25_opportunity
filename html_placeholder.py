@@ -1,4 +1,5 @@
 # Aider is running
+pip install -r requirements.txt
 import os
 
 # Define the folder path
