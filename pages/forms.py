@@ -1,5 +1,5 @@
 from django import forms
-from .models import Achievement
+from .models import Achievement, OrganizationProfile
 
 class AchievementForm(forms.ModelForm):
     class Meta:
@@ -8,3 +8,9 @@ class AchievementForm(forms.ModelForm):
         widgets = {
             'date_completed': forms.DateInput(attrs={'type': 'date'}),
         }
+
+
+class OrganizationProfileForm(forms.ModelForm):
+    class Meta:
+        model = OrganizationProfile
+        fields = ['name', 'description']
