@@ -28,6 +28,15 @@
 - **Proof:** `/buggy_fixed/?q=city` returns 200 and lists the Smart City project.
 
 ## Screenshots
+
 - Breakpoint/yellow-line captures for Bug 1 / Bug 2 / Bug 3.
+
+![Bug 1 Screenshot](Screenshot1.png)
+![Bug 2 Screenshot](Screenshot2.png)
+![Bug 3 Screenshot](Screenshot3.png)
+![All Tests Passed](tests_passed.png)
+![VS Code Debug](vscode_debug.png)
+
 - Browser 500 pages (buggy) vs 200 pages (fixed).
 - Terminal server output showing requests and no tracebacks for `/buggy_fixed/`.
+
