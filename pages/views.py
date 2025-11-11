@@ -1,21 +1,26 @@
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 
 from .models import Achievement
 from .forms import AchievementForm
 
+
 def welcome(request):
     return render(request, 'pages/welcome.html')
+
 
 @login_required
 def screen1(request):
     role = request.user.user_type.title() if hasattr(request.user, 'user_type') else 'User'
     return render(request, 'pages/screen1.html', {'role': role})
 
+
 @login_required
 def screen2(request):
     role = request.user.user_type.title() if hasattr(request.user, 'user_type') else 'User'
     return render(request, 'pages/screen2.html', {'role': role})
+
 
 @login_required
 def screen3(request):
@@ -26,7 +31,6 @@ def screen3(request):
 @login_required
 def student_achievements(request):
     if not hasattr(request.user, 'user_type') or request.user.user_type != 'student':
-        # Redirect non-students
         return redirect('screen1')
 
     if request.method == 'POST':
@@ -44,7 +48,20 @@ def student_achievements(request):
         'achievements': achievements,
         'form': form,
     })
+
+
 def faq(request):
     return render(request, 'pages/faq.html')
+
+
 def dashboard(request):
     return render(request, 'pages/dashboard.html')
+
+
+# --- placeholders so links/routes don’t crash ---
+def notifications(request):
+    return HttpResponse("Notifications placeholder")
+
+
+def company_home(request):
+    return HttpResponse("Company Home placeholder")
