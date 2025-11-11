@@ -87,8 +87,7 @@ if os.getenv("USE_SQLITE") == "1":
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
-            "NAME": ":memory:",              # fast in-memory DB for tests
-            "TEST": {"NAME": ":memory:"},
+            "NAME": BASE_DIR / "dev.sqlite3",  # file-based so runserver works
         }
     }
 # ----------------------------------------------------------------------
