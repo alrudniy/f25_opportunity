@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Available Opportunities</h1>
+<ul>
+    {% for opportunity in opportunities %}
+    <li>{{ opportunity.title }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

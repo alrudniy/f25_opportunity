@@ -1,3 +1,4 @@
+from django.shortcuts import render
 from rest_framework import generics, permissions, serializers, status, viewsets
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.response import Response
@@ -177,3 +178,16 @@ class NotificationReadView(generics.UpdateAPIView):
 
     def perform_update(self, serializer):
         serializer.save(is_read=True)
+
+
+def opportunity_list_view(request):
+    """
+    A view to display a list of sample opportunities.
+    """
+    opportunities = [
+        {'title': 'Internship'},
+        {'title': 'Volunteer'},
+        {'title': 'Job Fair'},
+    ]
+    context = {'opportunities': opportunities}
+    return render(request, 'opportunities/opportunity_list.html', context)
