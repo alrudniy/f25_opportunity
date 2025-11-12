@@ -1,0 +1,200 @@
+{% extends 'base.html' %}
+
+{% block title %}Organization Profile{% endblock %}
+
+{% block content %}
+<style>
+    .profile-header {
+        background: transparent;
+        color: #000000;
+        padding: 0;
+        margin-bottom: -25px;
+    }
+
+    .profile-header h1 {
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #000000;
+    }
+
+    .profile-header p {
+        font-size: 14px;
+        color: #666666;
+        margin-top: 15px;
+    }
+
+    .profile-card {
+        background: white;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        padding: 30px 50px 50px 50px;
+        margin-bottom: 30px;
+    }
+
+    .section-title {
+        font-size: 28px;
+        font-weight: 600;
+        color: #000000;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #000000;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .section-divider {
+        height: 1px;
+        background: #e0e0e0;
+        margin: 20px 0;
+    }
+
+    .btn-save {
+        background: #000000;
+        color: white;
+        border: none;
+        padding: 12px 32px;
+        border-radius: 4px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-save:hover {
+        background: #333333;
+        color: white;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #000000;
+        margin-bottom: 8px;
+    }
+
+    .form-control, .form-select {
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+        padding: 12px;
+    }
+
+    .form-control:focus, .form-select:focus {
+        border-color: #000000;
+        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+        outline: none;
+    }
+
+    .info-text {
+        color: #666666;
+        font-size: 14px;
+        margin-top: 8px;
+        line-height: 1.5;
+    }
+
+    .field-group {
+        margin-bottom: 35px;
+    }
+
+    .about-section {
+        background: #f9f9f9;
+        border: 1px solid #e0e0e0;
+        padding: 40px;
+        border-radius: 8px;
+        margin-top: 40px;
+    }
+
+    .field-icon {
+        width: 24px;
+        height: 24px;
+        color: #000000;
+    }
+
+    textarea.form-control {
+        line-height: 1.8;
+        font-size: 15px;
+        width: 100%;
+    }
+
+    .about-section .form-label {
+        display: block;
+        margin-bottom: 12px;
+        font-size: 16px;
+    }
+
+    .about-section textarea.form-control {
+        width: 100%;
+        max-width: 100%;
+    }
+</style>
+
+<div class="profile-header">
+    <div class="container">
+        <h1 class="mb-2">{{ profile.org_name|default:"Organization Profile" }}</h1>
+        <p class="mb-0">Manage your organization's profile information</p>
+    </div>
+</div>
+
+<div class="container mb-5">
+    <div class="profile-card">
+        {% if profile %}
+            <p style="color: #666; margin-bottom: 30px;">Manage your organization's profile information below.</p>
+        {% else %}
+            <p style="color: #666; margin-bottom: 30px;">Create your organization's profile to get started.</p>
+        {% endif %}
+
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <h2 class="section-title">
+                <svg class="field-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+                Basic Information
+            </h2>
+
+            <div class="field-group">
+                <label for="name" class="form-label">Organization Name</label>
+                <input type="text" class="form-control" id="name" name="name" value="{{ profile.name|default:'' }}" required style="width: 35%; min-width: 200px;">
+            </div>
+
+            <div class="field-group">
+                <label for="contact_email" class="form-label">Contact Email</label>
+                <input type="email" class="form-control" id="contact_email" name="contact_email" value="{{ profile.contact_email|default:'' }}" style="width: 35%; min-width: 200px;">
+                <p class="info-text">This email will be visible to volunteers</p>
+            </div>
+
+            <div class="field-group">
+                <label for="website" class="form-label">Website</label>
+                <input type="url" class="form-control" id="website" name="website" value="{{ profile.website|default:'' }}" placeholder="https://www.yourorganization.org" style="width: 35%; min-width: 200px;">
+            </div>
+
+            <div class="section-divider"></div>
+
+            <div class="about-section">
+                <h2 class="section-title">
+                    <svg class="field-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                    </svg>
+                    About Your Organization
+                </h2>
+
+                <div class="field-group">
+                    <label for="description" class="form-label">About Us</label>
+                    <textarea class="form-control" id="description" name="description" rows="10" placeholder="Tell volunteers about your organization's history, values, and impact...&#10;&#10;Share your story, your team, and what makes your organization unique.">{{ profile.description|default:'' }}</textarea>
+                    <p class="info-text">Share your organization's story and what makes you unique</p>
+                </div>
+
+                <div class="field-group">
+                    <label for="mission" class="form-label">Our Mission</label>
+                    <textarea class="form-control" id="mission" name="mission" rows="8" placeholder="What is your organization's mission and purpose?&#10;&#10;What impact do you want to make in your community?">{{ profile.mission|default:'' }}</textarea>
+                    <p class="info-text">Describe your organization's goals and what you aim to achieve</p>
+                </div>
+            </div>
+
+            <div class="text-end" style="margin-top: 50px;">
+                <button type="submit" class="btn btn-save">Save Profile</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

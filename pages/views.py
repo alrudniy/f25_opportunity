@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
-from .models import Achievement
-from .forms import AchievementForm
+from .models import Achievement, OrganizationProfile
+from .forms import AchievementForm, OrganizationProfileForm
 
 def welcome(request):
     return render(request, 'pages/welcome.html')
@@ -48,3 +48,26 @@ def faq(request):
     return render(request, 'pages/faq.html')
 def dashboard(request):
     return render(request, 'pages/dashboard.html')
+
+
+@login_required
+def organization_profile(request):
+    if not hasattr(request.user, 'user_type') or request.user.user_type != 'organization':
+        return redirect('screen1')
+
+    profile = getattr(request.user, 'organization_profile', None)
+
+    if request.method == 'POST':
+        form = OrganizationProfileForm(request.POST, instance=profile)
+        if form.is_valid():
+            profile_instance = form.save(commit=False)
+            profile_instance.user = request.user
+            profile_instance.save()
+            return redirect('organization_profile')
+    else:
+        form = OrganizationProfileForm(instance=profile)
+
+    return render(request, 'pages/organization_profile.html', {
+        'form': form,
+        'profile': profile,
+    })
