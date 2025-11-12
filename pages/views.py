@@ -18,3 +18,6 @@ def screen2(request):
 def screen3(request):
     role = request.user.user_type.title() if hasattr(request.user, 'user_type') else 'User'
     return render(request, 'pages/screen3.html', {'role': role})
+
+def contact(request):
+    return render(request, 'pages/contact.html')
