@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from . import buggy_view   # <-- add this import
+from ..debugging_assignment import buggy_view   # <-- add this import
 
 urlpatterns = [
     path('', views.welcome, name='welcome'),

@@ -1,5 +1,4 @@
-# ==== File purposfully containing three bugs ====
-# AttrubuteError, logic bug, and KeyError
+# pages/buggy_view.py
 
 from django.shortcuts import render
 
