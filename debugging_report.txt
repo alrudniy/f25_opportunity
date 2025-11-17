@@ -1,0 +1,66 @@
+Setup summary
+    - python -m venv .venv
+    - source .venv/bin/activate
+    - pip install -r requirements.txt
+
+    {
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Django: runserver",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/manage.py",
+      "args": ["runserver", "127.0.0.1:8000"],
+      "django": true,
+      "envFile": "${workspaceFolder}/.env",
+      "console": "integratedTerminal",
+      "justMyCode": true
+    },
+    {
+      "name": "Django: manage.py test (debug)",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/manage.py",
+      "args": ["test", "-v", "2"],
+      "django": true,
+      "env": { "DJANGO_ENV": "test" },   // settings.py uses this to switch DB in tests
+      "console": "integratedTerminal",
+      "justMyCode": true
+    }
+  ]
+}
+
+
+Bug 1
+    what caused it?
+      query = request.GET.get('q').strip() caused the error
+
+    how you found it (breakpoints, variable watch, exception trace)
+        I set a breakpoint on line 26 (query = request.GET.get('q').strip()). 
+        Once I ran the debugger and visited the website, http://127.0.0.1:8000/buggy/. I received an attribute error at /buggy/ stating that I had no attribute 'strip'. 
+
+    how you fixed it
+      I replaced line 26 where the error was with query = (request.GET.get('q') or "").strip(). 
+
+Bug 2
+    what caused it?
+      if field_filter is not 'All': caused the error because it is using 'is not'
+    
+    how you found it (breakpoints, variable watch, exception trace)
+      I set up a breakpoint on the code with the error. I then visted the website, http://127.0.0.1:8000/buggy/?q=ai&field=All
+      In the debugger view, the variables dropdown showed "field_filter = 'All'". So, it showed all the projects.
+
+    how you fixed it
+      I replaced the line with if field_filter != 'All', ensuring that the filter only happens when the field is different from 'All'.
+
+Bug 3
+    what caused it?
+      Line 36: return query.lower() in p['title'].lower() or query.lower() in p['descriptionn'].lower() caused the error because description was not spelled right causing a KeyError.
+    
+    how you found it (breakpoints, variable watch, exception trace)
+      I set up a breakpoint on the code with the error. When stepping inside the function, we received a KeyError error confirming that it was misspelled. 
+
+    how you fixed it
+      I replaced the line with the correct spelling. This fixed the error and allowed the search to work correctly.
+
