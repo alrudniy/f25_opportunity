@@ -1,3 +1,62 @@
+Project Setup for Debugging
+===========================
+
+This section outlines the necessary steps to set up the project environment for debugging the `buggy_view.py` file.
+
+### 1. Create and Activate Virtual Environment
+
+A virtual environment isolates project dependencies.
+
+- **Create the environment (using Python 3.11):**
+  From the project root directory, run:
+  ```
+  python -m venv venv_py311
+  ```
+
+- **Activate the environment:**
+  - On Windows (Command Prompt): `venv_py311\Scripts\activate`
+  - On Windows (PowerShell): `.\venv_py311\Scripts\Activate.ps1`
+  - On macOS/Linux (bash): `source venv_py311/bin/activate`
+
+### 2. Install Dependencies
+
+With the virtual environment active, install the required packages from the `requirements.txt` file.
+
+- **Install from `requirements.txt`:**
+  ```
+  pip install -r requirements.txt
+  ```
+
+### 3. Configure VS Code Debugger (`launch.json`)
+
+To use the VS Code debugger, a `.vscode/launch.json` file is needed.
+
+- **Create the file:**
+  Create a file named `launch.json` inside a `.vscode` directory at the project root.
+
+- **Add Django Configuration:**
+  Add the following JSON configuration to the file. This tells VS Code how to start the Django development server in debug mode, allowing you to set breakpoints.
+  ```json
+  {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Django: runserver",
+        "type": "python",
+        "request": "launch",
+        "program": "${workspaceFolder}/manage.py",
+        "args": ["runserver", "127.0.0.1:8000"],
+        "django": true,
+        "envFile": "${workspaceFolder}/.env",
+        "console": "integratedTerminal",
+        "justMyCode": true
+      }
+    ]
+  }
+  ```
+
+---
+
 Bug Report for buggy_view.py
 =============================
 
