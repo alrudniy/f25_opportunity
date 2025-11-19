@@ -1,0 +1,19 @@
+Bug Report for buggy_view.py
+=============================
+
+This report details the three bugs found in the `buggy_search` view located in `debugging_assignment/buggy_view.py`.
+
+### Bug 1: AttributeError on Missing Query Parameter
+
+- **Location:** Line 23: `query = request.GET.get('q').strip()`
+- **Description:** If the 'q' query parameter is not present in the HTTP request, `request.GET.get('q')` returns `None`. The subsequent call to `.strip()` on a `None` value raises an `AttributeError`, causing the server to return a 500 error.
+
+### Bug 2: Unreliable String Comparison
+
+- **Location:** Line 29: `if field_filter is not 'All':`
+- **Description:** The code uses the `is not` identity operator to compare the `field_filter` string with the literal 'All'. Identity operators check if two variables point to the same memory location, which is not reliable for comparing string values. The correct operator for checking value inequality is `!=`.
+
+### Bug 3: KeyError due to Typo in Dictionary Key
+
+- **Location:** Line 33: `... or query.lower() in p['descriptionn'].lower()`
+- **Description:** Within the `predicate` function, the code attempts to access the dictionary key `'descriptionn'`. However, the project dictionaries in `ALL_PROJECTS` use the key `'description'`. This typo will result in a `KeyError` whenever the predicate is evaluated.
