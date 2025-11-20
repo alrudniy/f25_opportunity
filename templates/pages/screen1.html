@@ -9,10 +9,10 @@
       <p>Welcome student! Explore your opportunities.</p>
     {% elif request.user.user_type == 'organization' %}
       {% include "pages/partials/s1_organization.html" %}
-      <p>Welcome organization! Post new opportunities.</p>
+      <p>Welcome, organization partner! Post and manage your opportunities here.</p>
     {% elif request.user.user_type == 'administrator' %}
       {% include "pages/partials/s1_administrator.html" %}
-      <p>Welcome administrator! Manage users and opportunities.</p>
+      <p>Welcome administrator! Manage users and opportunities from this dashboard.</p>
     {% else %}
       <p>No role specific content yet.</p>
     {% endif %}
