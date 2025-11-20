@@ -5,7 +5,8 @@ def welcome(request):
     return render(request, 'pages/welcome.html')
 
 def contact(request):
-    return render(request, 'pages/contact.html')
+    """Public contact page that anyone can see."""
+    return render(request, "pages/contact.html")
 
 @login_required
 def screen1(request):
