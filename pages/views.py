@@ -4,6 +4,9 @@ from django.contrib.auth.decorators import login_required
 def welcome(request):
     return render(request, 'pages/welcome.html')
 
+def contact(request):
+    return render(request, 'pages/contact.html')
+
 @login_required
 def screen1(request):
     role = request.user.user_type.title() if hasattr(request.user, 'user_type') else 'User'
