@@ -6,10 +6,13 @@
 
     {% if request.user.user_type == 'student' %}
       {% include "pages/partials/s1_student.html" %}
+      <p>Welcome student! Explore your opportunities.</p>
     {% elif request.user.user_type == 'organization' %}
       {% include "pages/partials/s1_organization.html" %}
+      <p>Welcome organization! Post new opportunities.</p>
     {% elif request.user.user_type == 'administrator' %}
       {% include "pages/partials/s1_administrator.html" %}
+      <p>Welcome administrator! Manage users and opportunities.</p>
     {% else %}
       <p>No role specific content yet.</p>
     {% endif %}
