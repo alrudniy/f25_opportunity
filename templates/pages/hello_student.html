@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .hello-student-container {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 80vh;
+        text-align: center;
+    }
+    .avatar {
+        width: 150px;
+        height: 150px;
+        background-color: #ccc;
+        border-radius: 50%;
+        margin: 20px 0;
+    }
+    .action-buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .action-buttons .btn {
+        width: 250px;
+        margin-top: 10px;
+    }
+</style>
+
+<div class="hello-student-container">
+    <header>
+        <h1>Hello {{ student_name }}</h1>
+    </header>
+    <div class="avatar"></div>
+    <div class="action-buttons">
+        <a href="#" class="btn btn-primary">Your Applications</a>
+        <a href="#" class="btn btn-primary">Your Profile</a>
+        <a href="#" class="btn btn-primary">Peer Activities</a>
+        <a href="#" class="btn btn-primary">Post Your Experience</a>
+        <a href="#" class="btn btn-primary">Find New Opportunities</a>
+    </div>
+</div>
+{% endblock %}
