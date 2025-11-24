@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>
+    Conversation with 
+    {% for user in conversation.participants.all %}
+        {% if user != request.user %}
+            {{ user.get_username }}
+        {% endif %}
+    {% endfor %}
+</h2>
+
+<div>
+    {% for message in conversation.messages.all %}
+    <div>
+        <p><strong>{{ message.sender.get_username }}</strong>: {{ message.content }}</p>
+        <small>{{ message.timestamp }}</small>
+    </div>
+    {% endfor %}
+</div>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Send</button>
+</form>
+{% endblock %}
