@@ -18,3 +18,8 @@ def screen2(request):
 def screen3(request):
     role = request.user.user_type.title() if hasattr(request.user, 'user_type') else 'User'
     return render(request, 'pages/screen3.html', {'role': role})
+
+@login_required
+def portfolio(request):
+    """Displays the user's portfolio page."""
+    return render(request, 'pages/portfolio.html')
