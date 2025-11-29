@@ -1,11 +1,319 @@
 {% extends "base.html" %}
 {% block content %}
   <section class="dash-card">
-    <h1>Screen 1 {{ role }}</h1>
     <p class="muted">Hello {{ request.user.display_name }} ({{ role }})</p>
 
+    <div class="button-row" style="margin-top:1rem;">
+      <a class="btn" href="{% url 'screen2' %}">Go to Screen 2</a>
+      <a class="btn" href="{% url 'screen3' %}">Go to Screen 3</a>
+    </div>
+
     {% if request.user.user_type == 'student' %}
-      {% include "pages/partials/s1_student.html" %}
+      <!-- Student View: Volunteer Opportunities Gallery -->
+      <style>
+        .header-with-filter {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin: 25px 0 20px 0;
+          flex-wrap: wrap;
+          gap: 15px;
+        }
+
+        .results-header {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+        }
+
+        .results-header h2 {
+          margin: 0;
+          font-size: 22px;
+        }
+
+        .count-badge {
+          background: #000;
+          color: white;
+          padding: 4px 12px;
+          border-radius: 12px;
+          font-size: 14px;
+          font-weight: 500;
+        }
+
+        .filter-toggle-btn {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          background: white;
+          color: #000;
+          border: 2px solid #000;
+          padding: 10px 20px;
+          border-radius: 6px;
+          font-weight: 600;
+          cursor: pointer;
+          transition: all 0.3s;
+          font-size: 14px;
+        }
+
+        .filter-toggle-btn:hover {
+          background: #000;
+          color: white;
+        }
+
+        .filter-toggle-btn svg {
+          width: 20px;
+          height: 20px;
+        }
+
+        .filters-dropdown {
+          background: #fff;
+          border: 1px solid #e5e7eb;
+          border-radius: 0.8rem;
+          padding: 2rem;
+          margin-bottom: 25px;
+          display: none;
+          animation: slideDown 0.3s ease-out;
+          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .filters-dropdown.active {
+          display: block;
+        }
+
+        @keyframes slideDown {
+          from {
+            opacity: 0;
+            transform: translateY(-10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .filter-row {
+          display: flex;
+          gap: 15px;
+          margin-bottom: 15px;
+          flex-wrap: wrap;
+        }
+
+        .filter-field {
+          flex: 1;
+          min-width: 200px;
+        }
+
+        .filter-field label {
+          display: block;
+          font-weight: 600;
+          margin-bottom: 5px;
+          color: #111;
+        }
+
+        .filter-field input[type="text"],
+        .filter-field input[type="search"],
+        .filter-field select {
+          width: 100%;
+          padding: 0.6rem 0.7rem;
+          border: 1px solid #cbd5e1;
+          border-radius: 0.5rem;
+          font-size: 14px;
+          background: white;
+          cursor: text;
+          pointer-events: auto;
+          font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        }
+
+        .filter-field input[type="text"]:focus,
+        .filter-field input[type="search"]:focus,
+        .filter-field select:focus {
+          outline: none;
+          border-color: #e01d1d;
+          box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .filter-field input[type="text"]:disabled,
+        .filter-field select:disabled {
+          background: #f5f5f5;
+          cursor: not-allowed;
+        }
+
+        .filter-checkbox {
+          display: flex;
+          align-items: center;
+          gap: 8px;
+          margin-top: 28px;
+        }
+
+        .filter-checkbox input {
+          width: auto;
+        }
+
+        .filter-actions {
+          display: flex;
+          gap: 10px;
+          margin-top: 15px;
+        }
+
+        .btn-filter {
+          background: #e01d1d;
+          color: white;
+          border: none;
+          padding: 0.6rem 0.9rem;
+          border-radius: 0.6rem;
+          font-weight: 500;
+          cursor: pointer;
+          transition: filter 0.2s;
+        }
+
+        .btn-filter:hover {
+          filter: brightness(1.05);
+        }
+
+        .btn-clear-filter {
+          background: #111827;
+          color: #fff;
+          border: none;
+          padding: 0.6rem 0.9rem;
+          border-radius: 0.6rem;
+          font-weight: 500;
+          cursor: pointer;
+          text-decoration: none;
+          transition: filter 0.2s;
+          display: inline-block;
+        }
+
+        .btn-clear-filter:hover {
+          filter: brightness(1.05);
+        }
+
+        .opportunities-gallery {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+          gap: 25px;
+          margin-top: 20px;
+        }
+
+        .no-results {
+          background: #f9f9f9;
+          border: 1px solid #e0e0e0;
+          padding: 40px;
+          border-radius: 8px;
+          text-align: center;
+          color: #666;
+        }
+
+        .no-results h3 {
+          color: #000;
+          margin-top: 0;
+        }
+
+        @media (max-width: 768px) {
+          .filter-row {
+            flex-direction: column;
+          }
+
+          .filter-field {
+            min-width: 100%;
+          }
+
+          .opportunities-gallery {
+            grid-template-columns: 1fr;
+          }
+        }
+      </style>
+
+      <div class="header-with-filter">
+        <div class="results-header">
+          <h2>Volunteer Opportunities</h2>
+          {% if total_count is not None %}
+            <span class="count-badge">{{ total_count }}</span>
+          {% endif %}
+        </div>
+
+        <button type="button" class="filter-toggle-btn" onclick="toggleFilters()">
+          <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
+          </svg>
+          Filter
+        </button>
+      </div>
+
+      <div class="filters-dropdown" id="filtersDropdown">
+        <form method="get" action="{% url 'screen1' %}" id="filterForm">
+          <div class="filter-row">
+            <div class="filter-field">
+              <label for="{{ form.search_query.id_for_label }}">Search Keywords</label>
+              <input type="text" name="search_query" id="{{ form.search_query.id_for_label }}" placeholder="Search by title or description..." value="{{ form.search_query.value|default:'' }}">
+            </div>
+          </div>
+
+          <div class="filter-row">
+            <div class="filter-field">
+              <label for="{{ form.opportunity_type.id_for_label }}">Opportunity Type</label>
+              <select name="opportunity_type" id="{{ form.opportunity_type.id_for_label }}">
+                <option value="">All Types</option>
+                <option value="volunteer" {% if request.GET.opportunity_type == 'volunteer' %}selected{% endif %}>Volunteer</option>
+                <option value="internship" {% if request.GET.opportunity_type == 'internship' %}selected{% endif %}>Internship</option>
+              </select>
+            </div>
+
+            <div class="filter-field">
+              <label for="location_type">Location Type</label>
+              <select name="location_type" id="location_type">
+                <option value="">All Locations</option>
+                <option value="remote" {% if request.GET.location_type == 'remote' %}selected{% endif %}>Remote</option>
+                <option value="in_person" {% if request.GET.location_type == 'in_person' %}selected{% endif %}>In Person</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="filter-row">
+            <div class="filter-field">
+              <label for="{{ form.city.id_for_label }}">City</label>
+              <input type="text" name="city" id="{{ form.city.id_for_label }}" placeholder="City" value="{{ form.city.value|default:'' }}">
+            </div>
+
+            <div class="filter-field">
+              <label for="{{ form.state.id_for_label }}">State</label>
+              <input type="text" name="state" id="{{ form.state.id_for_label }}" placeholder="State" value="{{ form.state.value|default:'' }}">
+            </div>
+          </div>
+
+          <div class="filter-actions">
+            <button type="submit" class="btn-filter">Apply Filters</button>
+            <a href="{% url 'screen1' %}" class="btn-clear-filter">Clear Filters</a>
+          </div>
+        </form>
+      </div>
+
+      <script>
+        function toggleFilters() {
+          const dropdown = document.getElementById('filtersDropdown');
+          dropdown.classList.toggle('active');
+        }
+      </script>
+
+      {% if opportunities %}
+        <div class="opportunities-gallery">
+          {% for opportunity in opportunities %}
+            {% include 'pages/partials/opportunity_card.html' with opportunity=opportunity %}
+          {% endfor %}
+        </div>
+      {% else %}
+        {% if request.GET %}
+          <div class="no-results">
+            <h3>No Opportunities Found</h3>
+            <p>No opportunities match your search criteria. Try adjusting your filters or clearing them to see all available opportunities.</p>
+          </div>
+        {% else %}
+          <div class="no-results">
+            <h3>No Opportunities Available</h3>
+            <p>There are currently no published opportunities. Check back later!</p>
+          </div>
+        {% endif %}
+      {% endif %}
+
     {% elif request.user.user_type == 'organization' %}
       {% include "pages/partials/s1_organization.html" %}
     {% elif request.user.user_type == 'administrator' %}
@@ -14,9 +322,5 @@
       <p>No role specific content yet.</p>
     {% endif %}
 
-    <div class="button-row" style="margin-top:1rem;">
-      <a class="btn" href="{% url 'screen2' %}">Go to Screen 2</a>
-      <a class="btn" href="{% url 'screen3' %}">Go to Screen 3</a>
-    </div>
   </section>
 {% endblock %}
