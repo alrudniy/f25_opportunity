@@ -20,4 +20,7 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),
 
     path('api-auth/logout/', LogoutView.as_view(next_page='/api/'), name='drf_logout'),
+
+    # Password reset URLs
+    path('password-reset/', include('django.contrib.auth.urls')),
 ]

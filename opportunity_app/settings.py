@@ -44,7 +44,14 @@ TEMPLATES = [{
 
 WSGI_APPLICATION = 'opportunity_app.wsgi.application'
 
+# Email backend for development: sends emails to the console
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+EMAIL_USE_TLS = False
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+
 
 DATABASES = {
     'default': {
