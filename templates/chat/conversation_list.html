@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}My Conversations{% endblock %}
+
+{% block content %}
+<h2>My Conversations</h2>
+{% if conversations %}
+    <ul class="conversation-list">
+    {% for conversation in conversations %}
+        <li>
+            <a href="{% url 'chat:conversation_detail' conversation.id %}">
+                Conversation with 
+                {% for user in conversation.participants.all %}
+                    {% if user != request.user %}
+                        {{ user.display_name }}
+                    {% endif %}
+                {% endfor %}
+            </a>
+        </li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>You have no conversations.</p>
+{% endif %}
+{% endblock %}

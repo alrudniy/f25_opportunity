@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Conversation{% endblock %}
+
+{% block content %}
+<h2>Conversation with 
+    {% for user in conversation.participants.all %}
+        {% if user != request.user %}
+            {{ user.display_name }}
+        {% endif %}
+    {% endfor %}
+</h2>
+
+<div class="messages">
+    {% for message in messages %}
+        <div class="message {% if message.sender == request.user %}sent{% else %}received{% endif %}">
+            <p><strong>{{ message.sender.display_name }}</strong> <small>{{ message.timestamp|date:"N j, Y, P" }}</small></p>
+            <p>{{ message.content }}</p>
+        </div>
+    {% endfor %}
+</div>
+
+<form method="post" class="message-form">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn">Send</button>
+</form>
+{% endblock %}
