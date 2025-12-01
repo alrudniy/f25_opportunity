@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.db import models  # Import the models module
 from .models import Volunteer, Event, Opportunity
 
 def welcome(request):
