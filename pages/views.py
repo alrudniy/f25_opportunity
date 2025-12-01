@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 from .models import Achievement, Application, Opportunity
 from .forms import AchievementForm
@@ -69,6 +70,7 @@ def review_volunteers(request):
             if application and new_status in Application.ApplicationStatus.values:
                 application.status = new_status
                 application.save()
+                messages.success(request, f"Application status for {application.student.display_name} updated to '{application.get_status_display()}'.")
         return redirect('review_volunteers')
 
 
