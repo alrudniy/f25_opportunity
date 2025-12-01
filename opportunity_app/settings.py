@@ -10,9 +10,16 @@ DEBUG = os.getenv('DJANGO_DEBUG', 'True').lower() == 'true'
 ALLOWED_HOSTS = [h.strip() for h in os.getenv('ALLOWED_HOSTS', '127.0.0.1,localhost').split(',') if h.strip()]
 
 INSTALLED_APPS = [
-    'django.contrib.admin','django.contrib.auth','django.contrib.contenttypes',
-    'django.contrib.sessions','django.contrib.messages','django.contrib.staticfiles',
-    'accounts','pages',
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'accounts', # Added accounts app
+    'pages',
+    # Add crispy_forms here if you want to use its template packs globally
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -53,6 +60,7 @@ DATABASES = {
     }
 }
 
+# AUTH_USER_MODEL is crucial for using your custom User model
 AUTH_USER_MODEL = 'accounts.User'
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -72,6 +80,11 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-LOGIN_URL = 'login'
-LOGIN_REDIRECT_URL = 'screen1'
-LOGOUT_REDIRECT_URL = 'login'
+# Authentication URLs
+LOGIN_URL = 'login' # Name of the login view URL
+LOGIN_REDIRECT_URL = 'screen1' # URL to redirect to after successful login
+LOGOUT_REDIRECT_URL = 'login' # URL to redirect to after logout
+
+# Crispy Forms Settings
+CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
+CRISPY_TEMPLATE_PACK = 'bootstrap5'
