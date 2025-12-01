@@ -58,7 +58,7 @@
   {% if request.resolver_match.url_name != 'chat' %}
   <footer class="site-footer">
     <div class="container">
-      <small>&copy; {% now "Y" %} Opportunity App | <a href="{% url 'faq' %}">FAQ</a></small>
+      <small>&copy; {% now "Y" %} Opportunity App | <a href="{% url 'faq' %}">FAQ</a> | <a href="{% url 'get_mobile_app' %}">Get Mobile App</a></small>
     </div>
   </footer>
   {% endif %}

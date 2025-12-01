@@ -49,6 +49,9 @@ def student_achievements(request):
 def mobile_chat(request):
     return render(request, 'pages/mobile_chat.html')
 
+def get_mobile_app(request):
+    return render(request, 'pages/get_mobile_app.html')
+
 def faq(request):
     return render(request, 'pages/faq.html')
 def dashboard(request):
