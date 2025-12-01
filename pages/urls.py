@@ -10,4 +10,6 @@ urlpatterns = [
     path('chat/', views.chat, name='chat'),
     path('faq/', views.faq, name='faq'),
     path('dashboard/', views.dashboard, name='dashboard'),
+    path('offline/', views.offline, name='offline'),
+    path('serviceworker.js', views.serviceworker, name='serviceworker'),
 ]

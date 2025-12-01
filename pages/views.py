@@ -53,3 +53,9 @@ def faq(request):
     return render(request, 'pages/faq.html')
 def dashboard(request):
     return render(request, 'pages/dashboard.html')
+
+def serviceworker(request):
+    return render(request, 'serviceworker.js', content_type='application/javascript')
+
+def offline(request):
+    return render(request, 'pages/offline.html')
