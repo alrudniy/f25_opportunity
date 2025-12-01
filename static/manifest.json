@@ -1,7 +1,7 @@
 {
   "name": "Opportunity App",
   "short_name": "OppApp",
-  "start_url": "/",
+  "start_url": "/mobile/chat/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#007bff",

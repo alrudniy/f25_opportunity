@@ -1,6 +1,6 @@
 const CACHE_NAME = 'opportunity-app-cache-v1';
 const URLS_TO_CACHE = [
-  '/',
+  '{% url "mobile_chat" %}',
   '{% url "offline" %}',
   '/static/css/styles.css'
 ];
