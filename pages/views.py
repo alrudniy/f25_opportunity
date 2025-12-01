@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
-from .models import Achievement
+from .models import Achievement, Application, Opportunity
 from .forms import AchievementForm
 
 def welcome(request):
@@ -46,5 +46,37 @@ def student_achievements(request):
     })
 def faq(request):
     return render(request, 'pages/faq.html')
+
+@login_required
 def dashboard(request):
     return render(request, 'pages/dashboard.html')
+
+@login_required
+def review_volunteers(request):
+    if not hasattr(request.user, 'user_type') or request.user.user_type != 'organization':
+        # Redirect non-organizations
+        return redirect('screen1')
+
+    if request.method == 'POST':
+        application_id = request.POST.get('application_id')
+        new_status = request.POST.get('status')
+        if application_id and new_status:
+            # Check that this application belongs to an opportunity of this organization
+            application = Application.objects.filter(
+                id=application_id,
+                opportunity__organization=request.user
+            ).first()
+            if application and new_status in Application.ApplicationStatus.values:
+                application.status = new_status
+                application.save()
+        return redirect('review_volunteers')
+
+
+    applications = Application.objects.filter(
+        opportunity__organization=request.user
+    ).select_related('student', 'opportunity').order_by('-applied_at')
+    
+    return render(request, 'pages/review_volunteers.html', {
+        'applications': applications,
+        'status_choices': Application.ApplicationStatus.choices
+    })
