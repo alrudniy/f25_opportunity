@@ -46,10 +46,6 @@ def student_achievements(request):
     })
 
 @login_required
-def chat(request):
-    return render(request, 'pages/chat.html')
-
-@login_required
 def mobile_chat(request):
     return render(request, 'pages/mobile_chat.html')
 
