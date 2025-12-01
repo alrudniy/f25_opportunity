@@ -44,6 +44,11 @@ def student_achievements(request):
         'achievements': achievements,
         'form': form,
     })
+
+@login_required
+def chat(request):
+    return render(request, 'pages/chat.html')
+
 def faq(request):
     return render(request, 'pages/faq.html')
 def dashboard(request):
