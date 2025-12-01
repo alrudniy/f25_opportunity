@@ -1,9 +1,8 @@
-{% load static %}
 const CACHE_NAME = 'opportunity-app-cache-v1';
 const URLS_TO_CACHE = [
   '/',
   '{% url "offline" %}',
-  '{% static "css/styles.css" %}'
+  '/static/css/styles.css'
 ];
 
 self.addEventListener('install', event => {
