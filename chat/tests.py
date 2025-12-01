@@ -30,14 +30,14 @@ class ChatTests(TestCase):
         response = self.client.get(reverse('chat:start_conversation', args=[self.organization.id]))
         self.assertEqual(response.status_code, 302) # Redirect to conversation detail
         self.assertTrue(Conversation.objects.filter(participants=self.student).filter(participants=self.organization).exists())
-        convo = Conversation.objects.get(participants=self.student, participants=self.organization)
+        convo = Conversation.objects.filter(participants=self.student).filter(participants=self.organization).get()
         self.assertRedirects(response, reverse('chat:conversation_detail', args=[convo.id]))
 
     def test_send_message(self):
         self.client.login(username='student@test.com', password='password123')
         # Start conversation first
         self.client.get(reverse('chat:start_conversation', args=[self.organization.id]))
-        convo = Conversation.objects.get(participants=self.student, participants=self.organization)
+        convo = Conversation.objects.filter(participants=self.student).filter(participants=self.organization).get()
 
         # Send a message
         response = self.client.post(
