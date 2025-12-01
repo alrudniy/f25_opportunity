@@ -78,5 +78,5 @@ def review_volunteers(request):
     
     return render(request, 'pages/review_volunteers.html', {
         'applications': applications,
-        'status_choices': Application.ApplicationStatus.choices
+        'status_choices': Application.ApplicationStatus
     })

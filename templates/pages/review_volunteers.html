@@ -75,8 +75,8 @@
                         {% csrf_token %}
                         <input type="hidden" name="application_id" value="{{ app.id }}">
                         <select name="status" class="status-select">
-                            {% for value, label in status_choices %}
-                            <option value="{{ value }}" {% if value == app.status %}selected{% endif %}>{{ label }}</option>
+                            {% for choice in status_choices %}
+                            <option value="{{ choice.value }}" {% if choice.value == app.status %}selected{% endif %}>{{ choice.label }}</option>
                             {% endfor %}
                         </select>
                         <button type="submit" class="update-btn">Update</button>
