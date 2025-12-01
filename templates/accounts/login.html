@@ -17,6 +17,7 @@
       <button class="btn primary" type="submit">Sign in</button>
     </form>
     <div class="auth-links">
+      <a href="{% url 'password_reset' %}">Forgot password?</a>
       <a href="{% url 'register' %}{% if selected_user_type %}?type={{ selected_user_type }}{% endif %}">Create account</a>
     </div>
   </section>
