@@ -13,6 +13,7 @@
       <a class="brand" href="{% url 'welcome' %}">Opportunity App</a>
       <nav>
         <ul class="nav">
+          <li><a href="{% url 'about' %}">About</a></li> {# Added About link #}
           {% if user.is_authenticated %}
             <li><a href="{% url 'screen1' %}">Screen 1</a></li>
             <li><a href="{% url 'screen2' %}">Screen 2</a></li>

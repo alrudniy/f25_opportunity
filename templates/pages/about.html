@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}About Us{% endblock %}
+
+{% block content %}
+<div class="container">
+  <h1>About Opportunity App</h1>
+  <p>
+    Opportunity App is a platform designed to connect students and organizations through meaningful volunteer work and community engagement.
+  </p>
+
+  <h2>Purpose</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <h3>For Students</h3>
+      <p>
+        Gain valuable experience, develop new skills, and make a positive impact in your community. Find opportunities that align with your interests and career goals.
+      </p>
+    </div>
+    <div class="col-md-6">
+      <h3>For Organizations</h3>
+      <p>
+        Recruit passionate volunteers to support your cause, manage events efficiently, and track contributions to your organization's mission.
+      </p>
+    </div>
+  </div>
+
+  <h2>Our Impact</h2>
+  <div class="row stats-section">
+    <div class="col-md-4 text-center">
+      <h4>Total Volunteers</h4>
+      <p class="stat-number">{{ total_volunteers }}</p>
+    </div>
+    <div class="col-md-4 text-center">
+      <h4>Total Events</h4>
+      <p class="stat-number">{{ total_events }}</p>
+    </div>
+    <div class="col-md-4 text-center">
+      <h4>Total Hours Contributed</h4>
+      <p class="stat-number">{{ total_hours }}</p>
+    </div>
+  </div>
+</div>
+{% endblock %}
