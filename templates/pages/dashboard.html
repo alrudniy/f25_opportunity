@@ -101,6 +101,45 @@
     .profile-icon:hover {
       background-color: #dde2e6;
     }
+
+    .organizations-section {
+      margin-top: 40px;
+      text-align: left;
+    }
+    .organization-list {
+      list-style-type: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+    .organization-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .follow-btn {
+      padding: 8px 15px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: 500;
+      background-color: #007bff;
+      color: white;
+      transition: background-color 0.3s ease;
+      border: none;
+      cursor: pointer;
+    }
+    .follow-btn:hover {
+      background-color: #0056b3;
+    }
+    .follow-btn.followed {
+      background-color: #6c757d;
+    }
+    .follow-btn.followed:hover {
+      background-color: #5a6268;
+    }
   </style>
 </head>
 <body>
@@ -121,6 +160,33 @@
       <button class="dashboard-btn">✍️ Post your Experience</button>
       <button class="dashboard-btn">🔍 Find new Opportunities</button>
     </div>
+
+    {% if user.user_type == 'student' and organizations %}
+    <div class="organizations-section">
+      <div class="section-title">Organizations</div>
+      <div class="subtext">Follow organizations to get updates.</div>
+      <ul class="organization-list">
+        {% for item in organizations %}
+          <li class="organization-item">
+            <span>{{ item.organization.display_name }}</span>
+            <div>
+              {% if item.is_following %}
+                <form action="{% url 'unfollow_organization' item.organization.id %}" method="post" style="display: inline;">
+                  {% csrf_token %}
+                  <button type="submit" class="follow-btn followed">Unfollow</button>
+                </form>
+              {% else %}
+                <form action="{% url 'follow_organization' item.organization.id %}" method="post" style="display: inline;">
+                  {% csrf_token %}
+                  <button type="submit" class="follow-btn">Follow</button>
+                </form>
+              {% endif %}
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
   </div>
 
 </body>

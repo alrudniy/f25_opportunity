@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 
-from .models import Achievement
+from .models import Achievement, OrganizationSubscription
 from .forms import AchievementForm
 
 def welcome(request):
@@ -47,4 +48,50 @@ def student_achievements(request):
 def faq(request):
     return render(request, 'pages/faq.html')
 def dashboard(request):
+    print("\n--- Loading Dashboard ---")
+    print(f"User: {request.user} | User Type: {getattr(request.user, 'user_type', 'N/A')}")
+    if hasattr(request.user, 'user_type') and request.user.user_type == 'student':
+        User = get_user_model()
+        organizations = User.objects.filter(user_type='organization')
+        print(f"Found organizations: {list(organizations.values_list('display_name', flat=True))}")
+
+        subscriptions = OrganizationSubscription.objects.filter(student=request.user).values_list('organization_id', flat=True)
+
+        organizations_with_status = []
+        for org in organizations:
+            organizations_with_status.append({
+                'organization': org,
+                'is_following': org.id in subscriptions
+            })
+        
+        print(f"Context being sent to template: {organizations_with_status}")
+        return render(request, 'pages/dashboard.html', {'organizations': organizations_with_status})
+    
+    print("User is not a student, rendering default dashboard.")
     return render(request, 'pages/dashboard.html')
+
+
+@login_required
+def follow_organization(request, organization_id):
+    if request.method == 'POST':
+        if not hasattr(request.user, 'user_type') or request.user.user_type != 'student':
+            return redirect('screen1')
+
+        User = get_user_model()
+        organization = get_object_or_404(User, id=organization_id, user_type='organization')
+
+        OrganizationSubscription.objects.get_or_create(student=request.user, organization=organization)
+    return redirect('dashboard')
+
+
+@login_required
+def unfollow_organization(request, organization_id):
+    if request.method == 'POST':
+        if not hasattr(request.user, 'user_type') or request.user.user_type != 'student':
+            return redirect('screen1')
+
+        User = get_user_model()
+        organization = get_object_or_404(User, id=organization_id, user_type='organization')
+
+        OrganizationSubscription.objects.filter(student=request.user, organization=organization).delete()
+    return redirect('dashboard')
