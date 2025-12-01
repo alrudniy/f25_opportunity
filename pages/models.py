@@ -15,3 +15,25 @@ class Achievement(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class OrganizationSubscription(models.Model):
+    student = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='subscriptions',
+        limit_choices_to={'user_type': 'student'},
+    )
+    organization = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='subscribers',
+        limit_choices_to={'user_type': 'organization'},
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('student', 'organization')
+
+    def __str__(self):
+        return f'{self.student} follows {self.organization}'

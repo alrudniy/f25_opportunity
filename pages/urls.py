@@ -9,4 +9,6 @@ urlpatterns = [
     path('achievements/', views.student_achievements, name='student_achievements'),
     path('faq/', views.faq, name='faq'),
     path('dashboard/', views.dashboard, name='dashboard'),
+    path('organization/<int:organization_id>/follow/', views.follow_organization, name='follow_organization'),
+    path('organization/<int:organization_id>/unfollow/', views.unfollow_organization, name='unfollow_organization'),
 ]
