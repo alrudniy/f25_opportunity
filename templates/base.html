@@ -6,6 +6,34 @@
   <title>Opportunity App</title>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <style>
+    /* Message styles */
+    .messages {
+      list-style: none;
+      padding: 0;
+      margin: 1rem 0;
+    }
+    .messages li {
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 4px;
+      color: #fff;
+      font-weight: 500;
+    }
+    .messages li.success {
+      background-color: #28a745;
+    }
+    .messages li.info {
+      background-color: #17a2b8;
+    }
+    .messages li.warning {
+      background-color: #ffc107;
+      color: #212529;
+    }
+    .messages li.error {
+      background-color: #dc3545;
+    }
+  </style>
 </head>
 <body>
   <header class="site-header">
