@@ -76,6 +76,29 @@ Access the Django admin interface here:
 
 ---
 
+## API Endpoints
+
+### Subscriptions & Notifications
+- **Subscribe to an organization:**
+  - `POST /api/subscribe/`
+  - Body: `{ "organization_id": <id> }`
+  - Requires authentication as a student.
+
+- **Unsubscribe from an organization:**
+  - `DELETE /api/unsubscribe/`
+  - Body: `{ "organization_id": <id> }`
+  - Requires authentication as a student.
+
+- **List notifications:**
+  - `GET /api/notifications/`
+  - Returns a list of notifications for the authenticated user.
+  - Requires authentication.
+
+- **Mark notification as read:**
+  - `PATCH /api/notifications/<id>/read/`
+  - Marks a single notification as read.
+  - Requires authentication.
+
 ## 💡 Notes
 - Always activate your virtual environment before running the server.  
 - Stop the server anytime with `Ctrl + C` in the terminal.  

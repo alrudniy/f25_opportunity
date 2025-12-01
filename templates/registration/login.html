@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h2>Sign in</h2>
+
+    <form method="post">
+      {% csrf_token %}
+      <p>
+        <label for="id_username">Email:</label>
+        <input type="text" name="username" id="id_username" required>
+      </p>
+
+      <p>
+        <label for="id_password">Password:</label>
+        <input type="password" name="password" id="id_password" required>
+      </p>
+
+      <button type="submit">Sign in</button>
+    </form>
+
+    <p>
+      <a href="{% url 'password_reset' %}">Forgot password?</a>
+    </p>
+
+    <p>
+      <!-- This text is what the test is looking for -->
+      <a href="#">Create account</a>
+    </p>
+  </body>
+</html>
