@@ -1,32 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Student Dashboard</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: "Poppins", Arial, sans-serif;
-      background-color: lightblue;
-      color: #333;
-    }
+{% extends "base.html" %}
 
-    header {
-      background-color: #ffffff;
-      padding: 15px 40px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+{% block title %}Dashboard{% endblock %}
 
-    .header-title {
-      font-size: 1.5em;
-      font-weight: 600;
-      color: #0056b3;
-    }
-
+{% block content %}
+<style>
     .dashboard-container {
       text-align: center;
       background: #fff;
@@ -82,47 +59,22 @@
       box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
       transform: translateY(-2px);
     }
-
-    .profile-icon {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      background: #e9ecef;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #495057;
-      font-size: 1.5em;
-      cursor: pointer;
-      border: none;
-      transition: background-color 0.3s ease;
-    }
-
-    .profile-icon:hover {
-      background-color: #dde2e6;
-    }
-  </style>
-</head>
-<body>
-
-  <header>
-    <div class="header-title">Student Dashboard</div>
-    <button class="profile-icon">👤</button>
-  </header>
-
-  <div class="dashboard-container">
-    <div class="section-title">Welcome to your Dashboard</div>
+</style>
+<div class="dashboard-container">
+    <div class="section-title">Welcome to your Dashboard, {{ user.display_name }}</div>
     <div class="subtext">Select an option below to get started.</div>
 
     <div class="button-grid">
-      <button class="dashboard-btn">📄 Your Applications</button>
-      <button class="dashboard-btn">👤 Your Profile</button>
-      <button class="dashboard-btn">👥 Peer Activities</button>
-      <button class="dashboard-btn">✍️ Post your Experience</button>
-      <button class="dashboard-btn">🔍 Find new Opportunities</button>
+      {% if user.user_type == 'student' %}
+        <button class="dashboard-btn">📄 Your Applications</button>
+        <button class="dashboard-btn">👤 Your Profile</button>
+        <button class="dashboard-btn">👥 Peer Activities</button>
+        <button class="dashboard-btn">✍️ Post your Experience</button>
+        <button class="dashboard-btn">🔍 Find new Opportunities</button>
+      {% elif user.user_type == 'organization' %}
+        <button class="dashboard-btn" onclick="window.location.href='{% url 'review_volunteers' %}'">📝 Review Volunteers</button>
+      {% endif %}
     </div>
-  </div>
-
-</body>
-</html>
+</div>
+{% endblock %}
 

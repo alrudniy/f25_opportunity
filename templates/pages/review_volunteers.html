@@ -1,0 +1,122 @@
+{% extends "base.html" %}
+
+{% block title %}Review Volunteers{% endblock %}
+
+{% block content %}
+<style>
+    .review-container {
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    .review-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    .review-table th, .review-table td {
+        border: 1px solid #ddd;
+        padding: 12px;
+        text-align: left;
+    }
+    .review-table th {
+        background-color: #f8f9fa;
+        font-weight: 600;
+    }
+    .status-form {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
+    .status-select {
+        padding: 5px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+    }
+    .update-btn {
+        padding: 5px 10px;
+        border: none;
+        background-color: #007bff;
+        color: white;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .update-btn:hover {
+        background-color: #0056b3;
+    }
+    .messages {
+        list-style: none;
+        padding: 0;
+        margin: 20px 0 0;
+    }
+    .messages li {
+        padding: 15px;
+        margin-bottom: 1rem;
+        border: 1px solid transparent;
+        border-radius: .25rem;
+    }
+    .messages li.success {
+        color: #155724;
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+    }
+    .messages li.error {
+        color: #721c24;
+        background-color: #f8d7da;
+        border-color: #f5c6cb;
+    }
+</style>
+<div class="review-container">
+    <h1>Review Volunteer Applications</h1>
+    <p>Here are the applications for your opportunities.</p>
+
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if applications %}
+    <table class="review-table">
+        <thead>
+            <tr>
+                <th>Student</th>
+                <th>Opportunity</th>
+                <th>Applied On</th>
+                <th>Status</th>
+                <th>Update Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for app in applications %}
+            <tr>
+                <td>{{ app.student.display_name }} ({{ app.student.email }})</td>
+                <td>{{ app.opportunity.title }}</td>
+                <td>{{ app.applied_at|date:"Y-m-d H:i" }}</td>
+                <td>{{ app.get_status_display }}</td>
+                <td>
+                    <form method="post" action="{% url 'review_volunteers' %}" class="status-form">
+                        {% csrf_token %}
+                        <input type="hidden" name="application_id" value="{{ app.id }}">
+                        <select name="status" class="status-select">
+                            {% for value, label in status_choices.choices %}
+                            <option value="{{ value }}" {% if value == app.status %}selected{% endif %}>{{ label }}</option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="update-btn">Update</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No applications to review at this time.</p>
+    {% endif %}
+</div>
+{% endblock %}
