@@ -105,7 +105,7 @@
                         <input type="hidden" name="application_id" value="{{ app.id }}">
                         <select name="status" class="status-select">
                             {% for value, label in status_choices.choices %}
-                            <option value="{{ value }}" {% if value == app.status %}selected{% endif %}>{{ label }}</option>
+                            <option value="{{ value }}" {% ifequal value app.status %}selected{% endifequal %}>{{ label }}</option>
                             {% endfor %}
                         </select>
                         <button type="submit" class="update-btn">Update</button>
