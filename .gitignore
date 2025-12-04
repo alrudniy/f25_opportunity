@@ -7,3 +7,5 @@ __pycache__/
 venv/
 ENV/
 env/
+.aider.chat.history.md
+.aider.input.history
