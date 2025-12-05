@@ -1,6 +1,6 @@
 # Ignore Python cache and virtual environments
 __pycache__/
-*.pyc
+*.py
 *.pyo
 *.pyd
 .env
