@@ -1,11 +1,11 @@
 from django.contrib import admin
 from django.urls import path, include
-from django.contrib.auth.views import LogoutView
+from accounts.views import PostOnlyLogoutView
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('pages.urls')),
     path('accounts/', include('accounts.urls')),
-    path('logout/', LogoutView.as_view(next_page='welcome'), name='logout'),
+    path('logout/', PostOnlyLogoutView.as_view(), name='logout'),
 ]
