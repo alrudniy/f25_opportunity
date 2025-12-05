@@ -1,7 +1,8 @@
 from django.contrib.auth import login as auth_login
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView as DjangoLogoutView
 from django.urls import reverse_lazy
 from django.views.generic import FormView
+from django.http import HttpResponseNotAllowed
 from .forms import UserRegistrationForm, EmailAuthenticationForm
 
 class RegisterView(FormView):
@@ -36,3 +37,9 @@ class CustomLoginView(LoginView):
             self.request.session['selected_user_type'] = user_type
         context['selected_user_type'] = user_type
         return context
+
+class PostOnlyLogoutView(DjangoLogoutView):
+    def dispatch(self, request, *args, **kwargs):
+        if request.method != 'POST':
+            return HttpResponseNotAllowed(['POST'])
+        return super().dispatch(request, *args, **kwargs)
