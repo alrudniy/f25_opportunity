@@ -1,0 +1,120 @@
+
+# 2025-10-27 12:40:53.287992
++aider --model gemini/gemini-2.5-flash
+
+# 2025-10-27 12:43:03.522693
++edit Readme_Joshua.md and make it say hello Joshua 
+
+# 2025-10-27 12:52:32.206112
++exit the Readme_Joshua.d
+
+# 2025-10-27 12:54:59.108247
++leave the readme
+
+# 2025-10-27 12:56:31.476506
++change the model to gemini/gemini-2.5-flash
+
+# 2025-11-05 12:20:54.511693
++what model am I using?
+
+# 2025-11-05 12:24:13.521970
++change the model to gemini/gemini-2.5-flash
+
+# 2025-11-05 12:27:57.032891
++make a new python code adding a way to comunicate with volenteers and organizations
+
+# 2025-11-05 12:37:14.585904
++make a tests file to run on a browser and I want to test the communication.py
+
+# 2025-11-05 12:42:04.534323
++I want this file to run on a browser so that I can communicate between volenteer workers and organizations. I have already created a place to run it on opportunity_app folder, accounts folder, pages folder
+
+# 2025-11-05 12:45:41.649220
++/run mkdir messenger
+
+# 2025-11-05 12:45:41.649220
++/run mkdir messenger
+
+# 2025-11-05 12:45:44.037386
++/run mkdir messenger\migrations
+
+# 2025-11-05 12:45:44.038240
++/run mkdir messenger\migrations
+
+# 2025-11-05 12:45:44.916742
++/run mkdir messenger\templates
+
+# 2025-11-05 12:45:44.916742
++/run mkdir messenger\templates
+
+# 2025-11-05 12:45:45.889522
++/run mkdir messenger\templates\messenger
+
+# 2025-11-05 12:45:45.889522
++/run mkdir messenger\templates\messenger
+
+# 2025-11-05 12:45:46.865025
++/run move communication.py messenger\managers.py
+
+# 2025-11-05 12:45:46.867041
++/run move communication.py messenger\managers.py
+
+# 2025-11-05 12:45:47.555333
++/run python manage.py makemigrations messenger
+
+# 2025-11-05 12:45:47.555333
++/run python manage.py makemigrations messenger
+
+# 2025-11-05 12:45:53.210144
++/run python manage.py migrate
+
+# 2025-11-05 12:45:53.210929
++/run python manage.py migrate
+
+# 2025-11-05 12:46:01.665911
++/run python manage.py createsuperuser
+
+# 2025-11-05 12:46:01.665911
++/run python manage.py createsuperuser
+
+# 2025-11-05 12:50:51.872593
++/run python manage.py runserver
+
+# 2025-11-05 12:50:51.872593
++/run python manage.py runserver
+
+# 2025-12-01 12:20:53.289519
++exit
+
+# 2025-12-05 16:50:20.056859
++n
+
+# 2025-12-05 16:58:14.521737
++make a code where you can comunitcate with the organizer and students like messages and also add a way to test this code on a web page. This is an app for opperunity and it is a way for students to get volunteer for thing that the organizers had posted for them.
+
+# 2025-12-05 17:02:02.861586
++y
+
+# 2025-12-05 17:02:22.414681
++/run python -m venv venv
+
+# 2025-12-05 17:02:22.414681
++/run python -m venv venv
+
+# 2025-12-05 17:02:23.208670
++/run .\venv\Scripts\activate
+
+# 2025-12-05 17:02:23.208670
++/run .\venv\Scripts\activate
+
+# 2025-12-05 17:02:24.185772
++/run pip install -r requirements.txt
+
+# 2025-12-05 17:02:24.186686
++/run pip install -r requirements.txt
+
+# 2025-12-05 17:02:38.209358
++/run python app.py
+
+# 2025-12-05 17:02:38.214842
++/run python app.py
