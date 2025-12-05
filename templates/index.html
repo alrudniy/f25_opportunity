@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opportunity Hub</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h1, h2 { color: #333; }
+        a { color: #007bff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .nav-links a { margin-right: 15px; }
+        .message { background-color: #e9ecef; padding: 10px; margin-bottom: 10px; border-radius: 5px; }
+        .message strong { color: #0056b3; }
+        .login-form { margin-top: 20px; padding: 15px; background-color: #e9ecef; border-radius: 5px; }
+        .login-form select, .login-form button { padding: 8px; margin-right: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to the Opportunity Hub!</h1>
+        {% if user_name %}
+            <p>You are logged in as <strong>{{ user_name }}</strong> ({{ user_role | capitalize }}).</p>
+            <p class="nav-links">
+                <a href="{{ url_for('list_opportunities') }}">View Opportunities</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            </p>
+        {% else %}
+            <p>Please log in to continue.</p>
+            <div class="login-form">
+                <form action="{{ url_for('login') }}" method="post">
+                    <label for="username">Log in as:</label>
+                    <select name="username" id="username">
+                        {% for user_id, user_data in users.items() %}
+                            <option value="{{ user_id }}">{{ user_data.name }} ({{ user_data.role | capitalize }})</option>
+                        {% endfor %}
+                    </select>
+                    <button type="submit">Login</button>
+                </form>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

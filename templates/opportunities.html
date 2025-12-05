@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Volunteer Opportunities</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h1, h2 { color: #333; }
+        a { color: #007bff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .nav-links a { margin-right: 15px; }
+        ul { list-style: none; padding: 0; }
+        li { background-color: #e9ecef; padding: 15px; margin-bottom: 10px; border-radius: 5px; }
+        li h3 { margin-top: 0; color: #0056b3; }
+        .create-button { display: inline-block; padding: 10px 15px; background-color: #28a745; color: white; border-radius: 5px; text-decoration: none; margin-bottom: 20px; }
+        .create-button:hover { background-color: #218838; }
+        .back-link { margin-top: 20px; display: block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Volunteer Opportunities</h1>
+        <p class="nav-links">
+            <a href="{{ url_for('index') }}">Home</a>
+        </p>
+
+        {% if user_role == 'organizer' %}
+            <a href="{{ url_for('new_opportunity') }}" class="create-button">Post New Opportunity</a>
+        {% endif %}
+
+        {% if opportunities %}
+            <ul>
+                {% for opp in opportunities %}
+                    <li>
+                        <h3>{{ opp.title }}</h3>
+                        <p>{{ opp.description }}</p>
+                        <p><a href="{{ url_for('view_messages', opportunity_id=opp.id) }}">Message Organizer / View Discussion</a></p>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No opportunities posted yet.</p>
+        {% endif %}
+
+        <a href="{{ url_for('index') }}" class="back-link">Back to Home</a>
+    </div>
+</body>
+</html>
