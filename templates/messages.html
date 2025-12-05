@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messages for {{ opportunity.title }}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f4f4f4; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        h1, h2 { color: #333; }
+        a { color: #007bff; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .nav-links a { margin-right: 15px; }
+        .message-list { border: 1px solid #ddd; padding: 15px; border-radius: 5px; max-height: 400px; overflow-y: auto; margin-bottom: 20px; background-color: #f9f9f9; }
+        .message { background-color: #e9ecef; padding: 10px; margin-bottom: 10px; border-radius: 5px; }
+        .message strong { color: #0056b3; }
+        .message-form textarea { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px; margin-bottom: 10px; box-sizing: border-box; }
+        .message-form button { padding: 10px 15px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .message-form button:hover { background-color: #0056b3; }
+        .back-link { margin-top: 20px; display: block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Messages for "{{ opportunity.title }}"</h1>
+        <p class="nav-links">
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('list_opportunities') }}">Back to Opportunities</a>
+        </p>
+
+        <h2>Discussion</h2>
+        <div class="message-list">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="message">
+                        <strong>{{ users[message.sender_id].name }}</strong>: {{ message.text }}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No messages yet for this opportunity. Be the first to start a conversation!</p>
+            {% endif %}
+        </div>
+
+        <div class="message-form">
+            <h2>Send a New Message</h2>
+            <form action="{{ url_for('view_messages', opportunity_id=opportunity.id) }}" method="post">
+                <textarea name="message_text" rows="4" placeholder="Type your message here..." required></textarea><br>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+
+        <a href="{{ url_for('list_opportunities') }}" class="back-link">Back to Opportunities</a>
+    </div>
+</body>
+</html>

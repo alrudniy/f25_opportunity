@@ -1,3 +1,7 @@
+.aider*
+.venv
+Joshua_JucaCampoverde.txt
+Readme_Joshua.md
 # Ignore Python cache and virtual environments
 __pycache__/
 *.pyc
