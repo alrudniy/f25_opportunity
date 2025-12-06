@@ -1,6 +1,7 @@
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+import sys
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / '.env')
@@ -50,8 +51,21 @@ DATABASES = {
         'HOST': os.getenv('DB_HOST','34.16.174.60'),
         'PORT': int(os.getenv('DB_PORT','5432')),
         'CONN_MAX_AGE': 60,
+          'TEST': {
+            'NAME': 'test_opportunity_db',
+        }
     }
 }
+
+# Use SQLite for testing to avoid database permission issues
+import sys
+if 'test' in sys.argv:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'test_db.sqlite3',
+        }
+    }
 
 AUTH_USER_MODEL = 'accounts.User'
 

@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
-from .models import Achievement
+from .models import Achievement, FindOpportunity
 from .forms import AchievementForm
+
 
 def welcome(request):
     return render(request, 'pages/welcome.html')
@@ -10,7 +11,41 @@ def welcome(request):
 @login_required
 def screen1(request):
     role = request.user.user_type.title() if hasattr(request.user, 'user_type') else 'User'
-    return render(request, 'pages/screen1.html', {'role': role})
+    
+    # Start with all published opportunities
+    opportunities = FindOpportunity.objects.filter(status='published')
+    
+    # Apply filters from GET parameters
+    opportunity_type = request.GET.get('opportunity_type')
+    if opportunity_type:
+        opportunities = opportunities.filter(opportunity_type=opportunity_type)
+    
+    location_type = request.GET.get('location_type')
+    if location_type == 'remote':
+        opportunities = opportunities.filter(is_remote=True)
+    elif location_type == 'in_person':
+        opportunities = opportunities.filter(is_remote=False)
+    
+    city = request.GET.get('city')
+    if city:
+        opportunities = opportunities.filter(city=city)
+    
+    state = request.GET.get('state')
+    if state:
+        opportunities = opportunities.filter(state=state)
+    
+    search_query = request.GET.get('search_query')
+    if search_query:
+        opportunities = opportunities.filter(title__icontains=search_query)
+    
+    # Get total count
+    total_count = opportunities.count()
+    
+    return render(request, 'pages/screen1.html', {
+        'role': role,
+        'opportunities': opportunities,
+        'total_count': total_count,
+    })
 
 @login_required
 def screen2(request):
