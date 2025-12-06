@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Achievements</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='achievements.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <h1 class="title">Achievements & Badges</h1>
+
+        <div class="stats">
+            <p><strong>Total Volunteer Hours:</strong> {{ total_hours }}</p>
+            <p><strong>Total Organizations Joined:</strong> {{ total_orgs }}</p>
+        </div>
+
+        <h2 class="section-title">Milestones</h2>
+
+        <div class="milestone-grid">
+            {% for m in milestones %}
+            <div class="milestone-card {{ 'completed' if m.completed else 'progress' }}">
+                <div class="icon">
+                    {% if m.completed %}
+                        🏆
+                    {% else %}
+                        ⏳
+                    {% endif %}
+                </div>
+
+                <div class="content">
+                    <h3>{{ m.title }}</h3>
+                    <p class="desc">{{ m.description }}</p>
+                    <p class="status">
+                        Status:
+                        <span>{{ "Completed" if m.completed else "In Progress" }}</span>
+                    </p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

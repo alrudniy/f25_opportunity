@@ -1,0 +1,80 @@
+body {
+    font-family: "Inter", sans-serif;
+    background: #f8fafc;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 85%;
+    margin: 40px auto;
+}
+
+.title {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #0f766e; /* teal */
+}
+
+.stats p {
+    font-size: 16px;
+}
+
+.section-title {
+    margin-top: 30px;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #134e4a; /* dark teal */
+}
+
+.milestone-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 18px;
+}
+
+.milestone-card {
+    display: flex;
+    align-items: center;
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    border-left: 8px solid teal;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.milestone-card.completed {
+    background: #e6fcf5; /* very light teal */
+    border-left-color: #0d9488;
+}
+
+.milestone-card.progress {
+    background: #fff7ed; /* soft orange */
+    border-left-color: #f97316;
+}
+
+.icon {
+    font-size: 42px;
+    margin-right: 20px;
+}
+
+.content h3 {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.desc {
+    margin: 6px 0;
+    color: #555;
+}
+
+.status span {
+    font-weight: 600;
+    color: #0f766e;
+}
+
+.milestone-card.progress .status span {
+    color: #dc2626;
+}
