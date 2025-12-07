@@ -21,3 +21,8 @@ env/
 .env
 .env
 .env
+.aider.chat.history.md
+.aider.input.history
+.venv/
+.vscode/
+opportunity_app/.vscode/
