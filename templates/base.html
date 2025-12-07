@@ -14,9 +14,10 @@
       <nav>
         <ul class="nav">
           {% if user.is_authenticated %}
-            <li><a href="{% url 'screen1' %}">Volunteer Opportunities</a></li>
-            <li><a href="{% url 'screen2' %}">Organization</a></li>
-            <li><a href="{% url 'screen3' %}">Contact Us</a></li>
+            <li><a href="{% url 'screen1' %}">Screen 1</a></li>
+            <li><a href="{% url 'screen2' %}">Screen 2</a></li>
+            <li><a href="{% url 'screen3' %}">Screen 3</a></li>
+            <li><a href="{% url 'contact' %}">Contact Us</a></li>
             <li class="divider"></li>
             <li class="muted">Hi, {{ user.display_name }}</li>
             <li><!-- <a href="{% url 'logout' %}">Log out</a> -->
@@ -28,7 +29,7 @@
           {% else %}
             <li><a href="{% url 'login' %}">Log in</a></li>
             <li><a href="{% url 'register' %}">Create account</a></li>
-            
+            <li><a href="{% url 'contact' %}">Contact Us</a></li>
           {% endif %}
         </ul>
       </nav>
