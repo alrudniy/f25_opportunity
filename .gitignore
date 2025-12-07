@@ -7,3 +7,17 @@ __pycache__/
 venv/
 ENV/
 env/
+
+
+.aider.chat.history.md
+.aider.input.history
+.aider.tags.cache.v4/
+
+
+.venv/
+
+
+db.sqlite3
+
+
+tests/
