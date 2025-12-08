@@ -14,6 +14,9 @@
       <nav>
         <ul class="nav">
           {% if user.is_authenticated %}
+            {% if user.user_type == 'organization' %}
+              <li><a href="{% url 'company_home' %}">Company Home</a></li>
+            {% endif %}
             <li><a href="{% url 'screen1' %}">Volunteer Opportunities</a></li>
             <li><a href="{% url 'screen2' %}">Organization</a></li>
             <li><a href="{% url 'screen3' %}">Contact Us</a></li>
