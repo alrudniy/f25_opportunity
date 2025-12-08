@@ -6,7 +6,13 @@ import sys
 
 def main():
     """Run administrative tasks."""
-    os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'opportunity_app.settings')
+    # If the 'test' command is being run, use the test settings module.
+    # This ensures that an in-memory SQLite database is used,
+    # avoiding potential PostgreSQL permission issues for creating test databases.
+    if 'test' in sys.argv:
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'opportunity_app.settings_test')
+    else:
+        os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'opportunity_app.settings')
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:
