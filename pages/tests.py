@@ -33,11 +33,12 @@ class PagesViewsTest(TestCase):
         self.achievements_url = reverse('student_achievements')
         self.faq_url = reverse('faq')
         self.dashboard_url = reverse('dashboard')
+        self.company_home_url = reverse('company_home') # Add company_home_url
 
     # Test unauthenticated access to protected views
     def test_unauthenticated_access_redirects_to_login(self):
         protected_urls = [
-            self.screen1_url, self.screen2_url, self.screen3_url, self.achievements_url
+            self.screen1_url, self.screen2_url, self.screen3_url, self.achievements_url, self.company_home_url
         ]
         for url in protected_urls:
             response = self.client.get(url)
@@ -214,3 +215,29 @@ class PagesViewsTest(TestCase):
         self.assertTrue(response.context['form'].errors)
         self.assertIn('date_completed', response.context['form'].errors)
         self.assertEqual(Achievement.objects.count(), initial_achievement_count)
+
+    # Test company_home view access control
+    def test_company_home_access_control(self):
+        # Unauthenticated access should redirect to login
+        response = self.client.get(self.company_home_url)
+        self.assertRedirects(response, f'{self.login_url}?next={self.company_home_url}')
+
+        # Student user should be redirected to screen1
+        self.client.login(username=self.student_user.username, password='password123')
+        response = self.client.get(self.company_home_url)
+        self.assertRedirects(response, self.screen1_url)
+        self.client.logout()
+
+        # Organization user should access the page successfully
+        self.client.login(username=self.organization_user.username, password='password123')
+        response = self.client.get(self.company_home_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'pages/company_home.html')
+        self.client.logout()
+
+        # Admin user (which is set as 'organization' type in setUp) should access the page successfully
+        self.client.login(username=self.admin_user.username, password='password123')
+        response = self.client.get(self.company_home_url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'pages/company_home.html')
+        self.client.logout()
