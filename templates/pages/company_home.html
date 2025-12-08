@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %}Company Home{% endblock %}
+
+{% block content %}
+<h1>Welcome to Your Company Dashboard</h1>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Edit Profile</h5>
+        <p class="card-text">Update your company's information and details.</p>
+        <a href="{% url 'company_about' %}" class="btn btn-primary">Edit Profile</a>
+    </div>
+</div>
+
+<!-- Other company-specific content can go here -->
+
+{% endblock %}
