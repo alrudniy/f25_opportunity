@@ -64,7 +64,7 @@ def main():
     # 2) Install dependencies
     print(">> Upgrading pip / installing dependencies")
     run([str(py), "-m", "pip", "install", "--upgrade", "pip"])
-    run([str(py), "-m", "pip", "install", "Django>=5.0,<6.0", "psycopg2-binary", "python-dotenv"])
+    run([str(py), "-m", "pip", "install", "-r", "requirements.txt"])
 
     # 3) Start Django project (if not present)
     if not (cwd / "manage.py").exists():

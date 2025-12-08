@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+  <section class="dash-card">
+    <h1>About {{ request.user.display_name|default:request.user.email }}</h1>
+    
+    <h2>Mission</h2>
+    <p>Our mission is to connect talented students with exciting opportunities.</p>
+    
+    <h2>What We Solve</h2>
+    <p>We help bridge the gap between students seeking valuable work experience and organizations looking for fresh talent.</p>
+
+    <h2>Contact</h2>
+    <p>For inquiries, please reach out to us at {{ request.user.email }}.</p>
+    
+    <div><a class="btn" href="{% url 'screen1' %}">← Back to Dashboard</a></div>
+  </section>
+{% endblock %}

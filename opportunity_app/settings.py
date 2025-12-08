@@ -44,7 +44,7 @@ WSGI_APPLICATION = 'opportunity_app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME','opportunity'),
+        'NAME': os.getenv('DB_NAME','opportunity_db'),
         'USER': os.getenv('DB_USER','oppo_app'),
         'PASSWORD': os.getenv('DB_PASSWORD','CSCI340Fall2025'),
         'HOST': os.getenv('DB_HOST','34.16.174.60'),
