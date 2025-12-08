@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container my-4">
+    <h1 class="mb-4">{{ company_name }}</h1>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Mission</h5>
+            <p class="card-text">{{ mission_text }}</p>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">What problems do we solve?</h5>
+            <p class="card-text">{{ problems_solved_text }}</p>
+        </div>
+    </div>
+
+    <div class="card mb-3">
+        <div class="card-body">
+            <h5 class="card-title">Contact</h5>
+            <p class="card-text">Email: <a href="mailto:{{ contact_email }}">{{ contact_email }}</a></p>
+        </div>
+    </div>
+
+    <a href="{% url 'screen1' %}" class="btn btn-secondary mt-3">Back to Dashboard</a>
+</div>
+{% endblock %}
