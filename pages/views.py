@@ -49,11 +49,15 @@ def faq(request):
 def dashboard(request):
     return render(request, 'pages/dashboard.html')
 
-@login_required
+@login_required                                                                                                                                                                                                                        
 def company_about(request):
+    """
+    Displays information about the logged-in company.
+    Accessible only by organization users.
+    """
     if not hasattr(request.user, 'user_type') or request.user.user_type != 'organization':
-        # Redirect non-organizations, or students/admins, from this page
-        return redirect('screen1') # Redirect to screen1 as per new requirement
+        # Redirect non-organizations (students/admins) from this page
+        return redirect('screen1')
 
     context = {
         'company_name': request.user.display_name,
