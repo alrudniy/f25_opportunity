@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
 
 from .models import Achievement
 from .forms import AchievementForm
@@ -44,7 +45,24 @@ def student_achievements(request):
         'achievements': achievements,
         'form': form,
     })
+
 def faq(request):
     return render(request, 'pages/faq.html')
+
 def dashboard(request):
     return render(request, 'pages/dashboard.html')
+
+@login_required
+def company_about(request):
+    # Assuming the logged-in user is an organization
+    company_display_name = request.user.display_name
+    mission_text = "Our mission is to connect students with meaningful opportunities and foster growth."
+    problems_solved = "We help organizations find talented students for internships and projects, while providing students with valuable real-world experience."
+    contact_email = "info@opportunityapp.com" # Replace with actual contact email if available
+
+    return render(request, 'pages/company_about.html', {
+        'company_display_name': company_display_name,
+        'mission_text': mission_text,
+        'problems_solved': problems_solved,
+        'contact_email': contact_email,
+    })
