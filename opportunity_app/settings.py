@@ -96,22 +96,4 @@ LOGIN_REDIRECT_URL = 'screen1'
 LOGOUT_REDIRECT_URL = 'login'
 
 # Disable test DB creation (use existing database instead)
-DATABASES['default']['TEST'] = {
-    'NAME': DATABASES['default']['NAME'],
-}
 
-from django.test.runner import DiscoverRunner
-
-class DisableDatabaseCreationMixin:
-    def setup_databases(self, *args, **kwargs):
-        # Skip creating test databases
-        return None
-
-    def teardown_databases(self, *args, **kwargs):
-        # Skip tearing down test databases
-        pass
-
-class NoDbTestRunner(DisableDatabaseCreationMixin, DiscoverRunner):
-    pass
-
-TEST_RUNNER = 'opportunity_app.settings.NoDbTestRunner'
