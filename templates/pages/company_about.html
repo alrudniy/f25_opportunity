@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1>About {{ user.display_name }}</h1>
+    <hr>
+    
+    <h2>Our Mission</h2>
+    <p>
+        Our mission is to connect talented students with meaningful opportunities that help them grow professionally and personally.
+    </p>
+    
+    <h2>What We Solve</h2>
+    <p>
+        We solve the problem of finding and retaining top student talent for organizations, while helping students gain valuable real-world experience.
+    </p>
+
+    <h2>Contact</h2>
+    <p>Email: {{ user.email }}</p>
+</div>
+{% endblock %}
