@@ -48,3 +48,17 @@ def faq(request):
     return render(request, 'pages/faq.html')
 def dashboard(request):
     return render(request, 'pages/dashboard.html')
+
+@login_required
+def company_about(request):
+    if not hasattr(request.user, 'user_type') or request.user.user_type != 'organization':
+        # Redirect non-organization users, e.g., to their respective dashboards or screen1
+        return redirect('screen1') 
+
+    context = {
+        'company_name': request.user.display_name if hasattr(request.user, 'display_name') else request.user.username,
+        'mission_text': "Our mission is to connect talented individuals with meaningful opportunities to foster professional growth and innovation.",
+        'problems_solved_text': "We help companies find the right talent quickly and efficiently, reducing recruitment costs and time-to-hire. For individuals, we provide a platform to discover opportunities aligned with their skills and career aspirations.",
+        'contact_email': request.user.email,
+    }
+    return render(request, 'pages/company_about.html', context)
