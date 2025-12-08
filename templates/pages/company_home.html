@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Company Home{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="mb-4">Welcome, {{ user.display_name }}!</h1>
+    <p class="lead">This is your company home page.</p>
+
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-building me-2"></i>Company Profile</h5>
+                    <p class="card-text">Manage your company's public profile information.</p>
+                    <a href="{% url 'company_about' %}" class="btn btn-primary">Edit Profile</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-briefcase me-2"></i>Manage Opportunities</h5>
+                    <p class="card-text">Create, view, and edit job opportunities.</p>
+                    <a href="#" class="btn btn-outline-secondary disabled">Coming Soon</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fas fa-users me-2"></i>View Applicants</h5>
+                    <p class="card-text">Browse students who have applied to your opportunities.</p>
+                    <a href="#" class="btn btn-outline-secondary disabled">Coming Soon</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -48,3 +48,21 @@ def faq(request):
     return render(request, 'pages/faq.html')
 def dashboard(request):
     return render(request, 'pages/dashboard.html')
+
+@login_required                                                                                                                                                                                                                        
+def company_about(request):
+    """
+    Displays information about the logged-in company.
+    Accessible only by organization users.
+    """
+    if not hasattr(request.user, 'user_type') or request.user.user_type != 'organization':
+        # Redirect non-organizations (students/admins) from this page
+        return redirect('screen1')
+
+    context = {
+        'company_name': request.user.display_name,
+        'mission_text': "Our mission is to empower the next generation of talent by connecting them with meaningful opportunities.",
+        'problems_text': "We help companies overcome recruitment challenges by streamlining the process of finding and engaging with skilled students and graduates. For students, we simplify the job search, connecting them with organizations that align with their career aspirations.",
+        'contact_email': request.user.email,
+    }
+    return render(request, 'pages/company_about.html', context)
