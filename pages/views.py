@@ -46,6 +46,18 @@ def student_achievements(request):
     })
 
 @login_required
+def company_about(request):
+    if not hasattr(request.user, 'user_type') or request.user.user_type != 'company':
+        return redirect('dashboard')
+
+    context = {
+        'company_name': request.user.display_name if hasattr(request.user, 'display_name') else request.user.username,
+        'contact_email': request.user.email,
+    }
+    return render(request, 'pages/company_about.html', context)
+
+
+@login_required
 def mobile_chat(request):
     return render(request, 'pages/mobile_chat.html')
 
