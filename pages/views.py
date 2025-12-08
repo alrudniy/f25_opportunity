@@ -48,3 +48,7 @@ def faq(request):
     return render(request, 'pages/faq.html')
 def dashboard(request):
     return render(request, 'pages/dashboard.html')
+
+@login_required
+def company_about(request):
+    return render(request, 'pages/company_about.html')
