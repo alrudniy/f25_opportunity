@@ -21,3 +21,11 @@ def screen3(request):
 
 def dashboard(request):
     return render(request, 'pages/dashboard.html')
+
+@login_required
+def company_about(request):
+    return render(request, 'pages/company_about.html')
+
+@login_required
+def company_home(request):
+    return render(request, 'pages/company_home.html')

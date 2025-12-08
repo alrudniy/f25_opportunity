@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+  <h1>About {{ user.display_name }}</h1>
+
+  <div class="card mt-3">
+    <div class="card-body">
+      <h5 class="card-title">Mission</h5>
+      <p class="card-text">Our mission is to connect students with opportunities and help organizations find the best talent.</p>
+    </div>
+  </div>
+
+  <div class="card mt-3">
+    <div class="card-body">
+      <h5 class="card-title">What Problems We Solve</h5>
+      <p class="card-text">We help bridge the gap between education and industry, making it easier for students to launch their careers and for companies to innovate.</p>
+    </div>
+  </div>
+
+  <div class="card mt-3">
+    <div class="card-body">
+      <h5 class="card-title">Contact</h5>
+      <p class="card-text">For any inquiries, please contact us at: {{ user.email }}</p>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
