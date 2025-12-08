@@ -1,8 +1,11 @@
 from django.contrib.auth import login as auth_login
+from django.contrib.auth import login as auth_login
 from django.contrib.auth.views import LoginView
 from django.urls import reverse_lazy
 from django.views.generic import FormView
 from .forms import UserRegistrationForm, EmailAuthenticationForm
+from django.shortcuts import render # Added for rendering the template
+from django.contrib.auth.decorators import login_required # Added for decorator
 
 class RegisterView(FormView):
     template_name = 'accounts/register.html'
@@ -36,3 +39,13 @@ class CustomLoginView(LoginView):
             self.request.session['selected_user_type'] = user_type
         context['selected_user_type'] = user_type
         return context
+
+@login_required
+def company_about(request):
+    context = {
+        'display_name': request.user.display_name,
+        'mission': "Our mission is to connect passionate volunteers with meaningful opportunities to make a positive impact in their communities.",
+        'problems_solved': "We help address community needs by streamlining volunteer recruitment, event management, and opportunity matching, ensuring efficient resource allocation and greater societal benefit.",
+        'contact_email': request.user.email,
+    }
+    return render(request, 'pages/company_about.html', context)

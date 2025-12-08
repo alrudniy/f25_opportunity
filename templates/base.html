@@ -15,6 +15,9 @@
         <ul class="nav">
           <li><a href="{% url 'about' %}">About</a></li> {# Added About link #}
           {% if user.is_authenticated %}
+            {% if user.user_type == 'organization' %}
+              <li><a href="{% url 'company_about' %}">About Us</a></li>
+            {% endif %}
             <li><a href="{% url 'screen1' %}">Screen 1</a></li>
             <li><a href="{% url 'screen2' %}">Screen 2</a></li>
             <li><a href="{% url 'screen3' %}">Screen 3</a></li>

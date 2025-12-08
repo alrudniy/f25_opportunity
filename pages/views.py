@@ -33,12 +33,3 @@ def about(request):
     }
     return render(request, 'pages/about.html', context)
 
-@login_required
-def company_about(request):
-    context = {
-        'display_name': request.user.display_name,
-        'mission': "Our mission is to connect passionate volunteers with meaningful opportunities to make a positive impact in their communities.",
-        'problems_solved': "We help address community needs by streamlining volunteer recruitment, event management, and opportunity matching, ensuring efficient resource allocation and greater societal benefit.",
-        'contact_email': request.user.email,
-    }
-    return render(request, 'pages/company_about.html', context)
