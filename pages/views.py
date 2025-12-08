@@ -44,6 +44,18 @@ def student_achievements(request):
         'achievements': achievements,
         'form': form,
     })
+
+
+@login_required
+def hello_student(request):
+    if not hasattr(request.user, 'user_type') or request.user.user_type != 'student':
+        # Redirect non-students
+        return redirect('screen1')
+
+    student_name = request.user.display_name
+    return render(request, 'pages/hello_student.html', {'student_name': student_name})
+
+
 def faq(request):
     return render(request, 'pages/faq.html')
 def dashboard(request):
