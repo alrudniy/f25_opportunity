@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>Welcome, {{ user.display_name }}!</h1>
+
+    <div class="card-grid">
+        <div class="card">
+            <h2>Your Profile</h2>
+            <p>Manage your company's information.</p>
+            <a href="{% url 'company_about' %}" class="btn btn-primary">Edit Profile</a>
+        </div>
+
+        <div class="card">
+            <h2>Manage Opportunities</h2>
+            <p>Create, edit, or remove volunteer opportunities.</p>
+            <a href="#" class="btn btn-primary">View Opportunities</a>
+        </div>
+
+        <div class="card">
+            <h2>View Applications</h2>
+            <p>Review applications from students for your opportunities.</p>
+            <a href="#" class="btn btn-primary">Browse Applications</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
