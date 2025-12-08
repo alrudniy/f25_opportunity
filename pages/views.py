@@ -48,3 +48,10 @@ def faq(request):
     return render(request, 'pages/faq.html')
 def dashboard(request):
     return render(request, 'pages/dashboard.html')
+
+@login_required
+def company_home(request):
+    if not hasattr(request.user, 'user_type') or request.user.user_type != 'organization':
+        # Redirect non-organization users to screen1
+        return redirect('screen1')
+    return render(request, 'pages/company_home.html')
