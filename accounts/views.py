@@ -3,6 +3,8 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.urls import reverse_lazy
 from django.views.generic import FormView
 from django.shortcuts import redirect, render
+from django.template.loader import render_to_string  # Import render_to_string
+from django.conf import settings  # Import settings
 from .forms import UserRegistrationForm, EmailAuthenticationForm
 
 User = get_user_model()
@@ -56,4 +58,3 @@ class CustomLoginView(LoginView):
 
 class CustomLogoutView(LogoutView):
     next_page = reverse_lazy('login') # Redirect to login after logout
-
