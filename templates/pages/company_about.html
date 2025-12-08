@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container">
+    <h1>About {% if user.is_authenticated %}{{ user.display_name }}{% else %}Our Company{% endif %}</h1>
+
+    <section>
+        <h2>Our Mission</h2>
+        <p>
+            Here is a short mission statement for {% if user.is_authenticated %}{{ user.display_name }}{% else %}our company{% endif %}.
+            We aim to connect students with meaningful volunteer opportunities.
+        </p>
+    </section>
+
+    <section>
+        <h2>Problems We Solve</h2>
+        <p>
+            We help solve the challenge of students finding relevant volunteer work and organizations finding dedicated volunteers.
+            Our platform streamlines the process, making it easier for both parties to connect and collaborate effectively.
+        </p>
+    </section>
+
+    <section>
+        <h2>Contact</h2>
+        <p>
+            Email: {% if user.is_authenticated and user.email %}{{ user.email }}{% else %}info@opportunityapp.com{% endif %}
+        </p>
+    </section>
+</div>
+{% endblock %}
