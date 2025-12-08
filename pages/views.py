@@ -48,7 +48,7 @@ def student_achievements(request):
 @login_required
 def company_about(request):
     if not hasattr(request.user, 'user_type') or request.user.user_type != 'company':
-        return redirect('dashboard')
+        return redirect('screen1')
 
     context = {
         'company_name': request.user.display_name if hasattr(request.user, 'display_name') else request.user.username,
