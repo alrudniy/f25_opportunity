@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
 def welcome(request):
@@ -18,4 +18,6 @@ def screen3(request):
 
 @login_required
 def company_about(request):
+    if request.user.user_type != 'organization':
+        return redirect('screen1')
     return render(request, 'pages/company_about.html')
