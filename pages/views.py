@@ -44,7 +44,33 @@ def student_achievements(request):
         'achievements': achievements,
         'form': form,
     })
+
+@login_required
+def company_about(request):
+    if not hasattr(request.user, 'user_type') or request.user.user_type != 'company':
+        return redirect('screen1')
+
+    context = {
+        'company_name': request.user.display_name if hasattr(request.user, 'display_name') else request.user.username,
+        'contact_email': request.user.email,
+    }
+    return render(request, 'pages/company_about.html', context)
+
+
+@login_required
+def mobile_chat(request):
+    return render(request, 'pages/mobile_chat.html')
+
+def get_mobile_app(request):
+    return render(request, 'pages/get_mobile_app.html')
+
 def faq(request):
     return render(request, 'pages/faq.html')
 def dashboard(request):
     return render(request, 'pages/dashboard.html')
+
+def serviceworker(request):
+    return render(request, 'serviceworker.js', content_type='application/javascript')
+
+def offline(request):
+    return render(request, 'pages/offline.html')
