@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ display_name }} - About Us{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">{{ display_name }}</h2>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Our Mission</h5>
+            <p class="card-text">{{ mission }}</p>
+
+            <h5 class="card-title mt-4">What We Solve</h5>
+            <p class="card-text">{{ problems_solved }}</p>
+
+            <h5 class="card-title mt-4">Contact Us</h5>
+            <p class="card-text">Email: <a href="mailto:{{ contact_email }}">{{ contact_email }}</a></p>
+        </div>
+        <div class="card-footer text-muted">
+            <a href="{% url 'screen1' %}" class="btn btn-secondary">Back to Home</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
