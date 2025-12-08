@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Company Home{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Welcome, {{ user.display_name }}!</h1>
+    <p>This is your company dashboard.</p>
+
+    <div class="row mt-4">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Edit Profile</h5>
+                    <p class="card-text">Manage your company's public information.</p>
+                    <a href="{% url 'company_about' %}" class="btn btn-primary">Edit Profile</a>
+                </div>
+            </div>
+        </div>
+        {# Add more cards or content here as needed #}
+    </div>
+</div>
+{% endblock %}
