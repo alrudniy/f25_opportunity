@@ -27,7 +27,7 @@ class CompanyAboutViewTest(TestCase):
         )
         self.company_about_url = reverse('company_about')
         self.login_url = reverse('login')
-        self.dashboard_url = reverse('dashboard')
+        self.screen1_url = reverse('screen1') # Add screen1_url for the redirect check
 
     def test_company_about_redirects_if_not_logged_in(self):
         response = self.client.get(self.company_about_url)
@@ -36,12 +36,12 @@ class CompanyAboutViewTest(TestCase):
     def test_company_about_redirects_student_user(self):
         self.client.login(email='student@example.com', password='testpassword')
         response = self.client.get(self.company_about_url)
-        self.assertRedirects(response, self.dashboard_url)
+        self.assertRedirects(response, self.screen1_url)
 
     def test_company_about_redirects_admin_user(self):
         self.client.login(email='admin@example.com', password='testpassword')
         response = self.client.get(self.company_about_url)
-        self.assertRedirects(response, self.dashboard_url)
+        self.assertRedirects(response, self.screen1_url)
 
     def test_company_about_loads_for_organization_user(self):
         self.client.login(email='org@example.com', password='testpassword')

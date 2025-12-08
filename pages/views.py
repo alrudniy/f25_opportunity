@@ -53,7 +53,7 @@ def dashboard(request):
 def company_about(request):
     if not hasattr(request.user, 'user_type') or request.user.user_type != 'organization':
         # Redirect non-organizations, or students/admins, from this page
-        return redirect('dashboard') # Or another appropriate page
+        return redirect('screen1') # Redirect to screen1 as per new requirement
 
     context = {
         'company_name': request.user.display_name,
