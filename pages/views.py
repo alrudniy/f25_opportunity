@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
+from django.test import TestCase, Client
+from django.urls import reverse
 
 from .models import Achievement
 from .forms import AchievementForm
@@ -66,3 +68,37 @@ def company_about(request):
         'problems_solved': problems_solved,
         'contact_email': contact_email,
     })
+
+# --- Tests ---
+class CompanyAboutAccessControlTest(TestCase):
+    def setUp(self):
+        self.client = Client()
+        # Create a dummy user that is not an organization
+        from django.contrib.auth import get_user_model
+        User = get_user_model()
+        self.student_user = User.objects.create_user(username='student', password='password', user_type='student')
+        self.organization_user = User.objects.create_user(username='organization', password='password', user_type='organization')
+
+    def test_company_about_redirects_non_company_users(self):
+        """
+        Verify that non-company users are redirected from company_about page.
+        """
+        # Test with a student user
+        self.client.login(username='student', password='password')
+        response = self.client.get(reverse('company_about'))
+        self.assertEqual(response.status_code, 302)
+        self.assertRedirects(response, reverse('screen1'))
+
+        # Test with a user that has no user_type (should also be redirected)
+        # For simplicity, we'll assume the default user creation doesn't set user_type
+        # If your User model has a default, this test might need adjustment.
+        # For now, we'll rely on the student_user test which covers a non-organization type.
+
+    def test_company_about_allows_company_users(self):
+        """
+        Verify that company users can access the company_about page.
+        """
+        self.client.login(username='organization', password='password')
+        response = self.client.get(reverse('company_about'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'pages/company_about.html')
