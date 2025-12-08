@@ -12,6 +12,11 @@ class CompanyAboutAccessTest(TestCase):
             password='password',
             user_type='student'
         )
+        self.company_user = User.objects.create_user(
+            username='company@example.com',
+            password='password',
+            user_type='organization'
+        )
 
     def test_non_company_user_is_redirected(self):
         """
@@ -20,3 +25,11 @@ class CompanyAboutAccessTest(TestCase):
         self.client.login(username='student@example.com', password='password')
         response = self.client.get(reverse('company_about'))
         self.assertRedirects(response, reverse('screen1'))
+
+    def test_company_user_can_access_page(self):
+        """
+        Verify that a logged-in company user can access the company_about page.
+        """
+        self.client.login(username='company@example.com', password='password')
+        response = self.client.get(reverse('company_about'))
+        self.assertEqual(response.status_code, 200)
