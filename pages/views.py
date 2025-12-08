@@ -15,3 +15,7 @@ def screen2(request):
 @login_required
 def screen3(request):
     return render(request, 'pages/screen3.html')
+
+@login_required
+def company_about(request):
+    return render(request, 'pages/company_about.html')
